@@ -28,6 +28,7 @@ jobs:
       - name: Run Future Admiral AI-Quant Engine
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           ACCOUNT_EQUITY: 10000
           MAX_RISK_PER_TRADE: 1.0
         run: python fa_quant_engine.py
