@@ -40,16 +40,25 @@ def fetch_stock_data(ticker="NVDA", period="6mo", interval="1h"):
 
 def run_backtest(df, signals, asset_name, strategy_name):
     capital, position, entry_price, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, [], []
-    for i in range(len(df)):
-        price, sig = float(df["close"].iloc[i]), int(signals.iloc[i])
-        if sig == 1 and position == 0:
-            position = (capital * (1 - FEE_RATE)) / price
-            entry_price, capital = price, 0.0
-        elif sig == -1 and position > 0:
-            capital = (position * price) * (1 - FEE_RATE)
-            trades.append(((price - entry_price) / entry_price) * 100 - (FEE_RATE * 200))
+    slippage = 0.0005  # 0.05% per-side slippage on top of FEE_RATE (0.10%)
+    total_cost = FEE_RATE + slippage
+
+    for i in range(1, len(df)):
+        exec_open = float(df["open"].iloc[i])
+        close_px  = float(df["close"].iloc[i])
+        prev_sig  = int(signals.iloc[i - 1])  # Strict shift(1): act only on prior bar's confirmed close
+
+        if prev_sig == 1 and position == 0:
+            fill_px = exec_open * (1 + slippage)
+            position = (capital * (1 - FEE_RATE)) / fill_px
+            entry_price, capital = fill_px, 0.0
+        elif prev_sig == -1 and position > 0:
+            fill_px = exec_open * (1 - slippage)
+            capital = (position * fill_px) * (1 - FEE_RATE)
+            trades.append(((fill_px - entry_price) / entry_price) * 100 - (total_cost * 200))
             position = 0.0
-        eq.append(capital if position == 0 else position * price)
+
+        eq.append(capital if position == 0 else position * close_px)
 
     final_eq = eq[-1] if eq else INITIAL_CAPITAL
     net_ret = ((final_eq - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
