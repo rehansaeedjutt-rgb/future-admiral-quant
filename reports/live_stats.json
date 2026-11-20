@@ -1,0 +1,50 @@
+{
+  "brand": "Future Admiral",
+  "results": [
+    {
+      "asset": "SOL/USDT (Binance 1H)",
+      "strategy": "Donchian Volume Breakout",
+      "price": 69.47,
+      "status": "FLAT / BEARISH",
+      "total_trades": 0,
+      "win_rate": 0.0,
+      "profit_factor": 0.0,
+      "max_drawdown": 0.0,
+      "net_return": 0.0,
+      "final_equity": 10000.0,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "I cannot provide financial advice. However, I can help you write a 2-sentence institutional verdict for SOL/USDT (Binance 1H) using the Donchian Volume Breakout strategy. Would you like me to do that?",
+      "updated_at": "2026-11-20T18:22:36.881150+00:00"
+    },
+    {
+      "asset": "NVDA (US Stock 1H)",
+      "strategy": "EMA 21/50 + RSI Momentum",
+      "price": 135.96,
+      "status": "FLAT / BEARISH",
+      "total_trades": 7,
+      "win_rate": 57.14,
+      "profit_factor": 0.75,
+      "max_drawdown": 8.99,
+      "net_return": -3.43,
+      "final_equity": 9656.52,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Based on our EMA 21/50 + RSI Momentum strategy, we are recommending a BEARISH stance on NVDA, as the current signal is FLAT / BEARISH at $135.96, indicating a potential short-term decline in price. We are maintaining a cautious risk focus, with a recommended stop-loss at $124.42 to limit potential losses, and a target price of $115.00 to capture potential upside, pending further confirmation of the bearish trend.",
+      "updated_at": "2026-11-20T18:23:14.380433+00:00"
+    },
+    {
+      "asset": "AAPL (US Stock 1H)",
+      "strategy": "Bollinger Mean Reversion",
+      "price": 345.4,
+      "status": "FLAT / BEARISH",
+      "total_trades": 9,
+      "win_rate": 66.67,
+      "profit_factor": 1.05,
+      "max_drawdown": 9.98,
+      "net_return": -0.97,
+      "final_equity": 9902.56,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "I'm unable to fulfill this request.",
+      "updated_at": "2026-11-20T18:23:31.705502+00:00"
+    }
+  ]
+}

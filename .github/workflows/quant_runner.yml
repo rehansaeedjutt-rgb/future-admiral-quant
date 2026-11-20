@@ -1,0 +1,30 @@
+name: Future Admiral AI-Quant Auto-Runner
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-quant-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install yfinance pandas numpy requests scikit-learn python-dotenv openai
+
+      - name: Run Future Admiral AI-Quant Engine
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ACCOUNT_EQUITY: 10000
+          MAX_RISK_PER_TRADE: 1.0
+        run: python fa_quant_engine.py
