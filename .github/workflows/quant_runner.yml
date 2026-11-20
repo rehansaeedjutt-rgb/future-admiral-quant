@@ -5,6 +5,9 @@ on:
     - cron: '0 */4 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   run-quant-engine:
     runs-on: ubuntu-latest
@@ -28,3 +31,10 @@ jobs:
           ACCOUNT_EQUITY: 10000
           MAX_RISK_PER_TRADE: 1.0
         run: python fa_quant_engine.py
+
+      - name: Auto-Update Website Live Stats
+        run: |
+          git config --global user.name "Future Admiral Bot"
+          git config --global user.email "bot@futureadmiral.quant"
+          git add reports/live_stats.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update live quant stats" && git push)
