@@ -4,6 +4,7 @@ import numpy as np
 def add_indicators(df):
     df = df.copy()
     df["ema5"]   = df["close"].ewm(span=5, adjust=False).mean()
+    df["ema21"]  = df["close"].ewm(span=21, adjust=False).mean()
     df["ema50"]  = df["close"].ewm(span=50, adjust=False).mean()
     df["ema200"] = df["close"].ewm(span=200, adjust=False).mean()
 
@@ -11,13 +12,23 @@ def add_indicators(df):
     bar_range = (df["high"] - df["low"]).replace(0, np.nan)
     df["ibs"] = (df["close"] - df["low"]) / bar_range
 
-    # RSI 2, 3, 14
+    # RSI 2, 3, 14 (+ alias 'rsi' for ML filter compatibility)
     delta = df["close"].diff()
     for p in [2, 3, 14]:
         gain = delta.clip(lower=0).rolling(p).mean()
         loss = (-delta.clip(upper=0)).rolling(p).mean()
         rs = gain / loss.replace(0, np.nan)
         df[f"rsi{p}"] = 100 - (100 / (1 + rs))
+    df["rsi"] = df["rsi14"]
+
+    # ATR & Volume Ratio (required by ML filter)
+    tr = pd.concat([
+        df["high"] - df["low"],
+        (df["high"] - df["close"].shift(1)).abs(),
+        (df["low"] - df["close"].shift(1)).abs()
+    ], axis=1).max(axis=1)
+    df["atr"] = tr.rolling(14).mean()
+    df["vol_ratio"] = df["volume"] / df["volume"].rolling(20).mean().replace(0, np.nan)
 
     # Consecutive Down Bars
     down = (df["close"] < df["close"].shift(1)).astype(int)

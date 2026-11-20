@@ -109,7 +109,7 @@ def evaluate_asset(df, asset_name):
     for name, fn in STRATEGY_VAULT.items():
         ml_sig = apply_ml_filter(df, fn(df))
         stats = run_backtest(df, ml_sig, asset_name, name)
-        score = ((stats["win_rate"] * 0.6) + (stats["profit_factor"] * 12) + stats["net_return"] - (stats["max_drawdown"] * 1.2)) if (stats["total_trades"] >= 3 and stats["profit_factor"] >= 1.0) else -99999
+        score = ((stats["win_rate"] * 0.6) + (stats["profit_factor"] * 12) + stats["net_return"] - (stats["max_drawdown"] * 1.2)) if (stats["total_trades"] >= 15 and stats["profit_factor"] >= 1.0) else -99999
         if score > best_score:
             best_score, best_stats = score, stats
     verdict = get_ai_verdict(asset_name, best_stats["strategy"], best_stats)
@@ -132,20 +132,27 @@ if __name__ == "__main__":
         "JPM","V","MA","UNH","LLY","XOM","COST","WMT","HD","PG",
         "CRM","ORCL","ADBE","SPY","QQQ"
     ]
-    assets = [(f"{c.replace('USDT','/USDT')} (Binance 1H)", lambda sym=c: fetch_binance_data(sym, "1h", 1000)) for c in TOP_CRYPTO] + \
-             [(f"{s} (US Stock 1H)", lambda sym=s: fetch_stock_data(sym, "6mo", "1h")) for s in TOP_STOCKS]
+    assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 1000)) for c in TOP_CRYPTO] + \
+             [(f"{s} (US Stock 1D)", lambda sym=s: fetch_stock_data(sym, "3y", "1d")) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
             winner = evaluate_asset(fetcher(), label)
             results.append(winner)
             print(f"WINNER {label}: {winner['strategy']} | Ret: {winner['net_return']}% | WR: {winner['win_rate']}% | PF: {winner['profit_factor']}")
-            send_discord_report(winner, winner["ai_verdict"])
+            # send_discord_report(winner, winner["ai_verdict"])
         except Exception as e:
             print(f"Error on {label}: {e}")
-    # TOP 5 DISCORD DISPATCH (Prevents Discord Rate-Limit & Highlights Highest Win-Rate Setups)
+    # CLEAN FILTER & TOP-5 DISCORD DISPATCH
+    results = [r for r in results if r.get("win_rate", 0) > 0]
     results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
     for top in results[:5]:
-        send_discord_alert(top["asset"], top["strategy"], top, top["ai_verdict"])
+        try:
+            send_discord_report(top["asset"], top)
+        except Exception:
+            try:
+                send_discord_report(top, top.get("ai_verdict", ""))
+            except Exception:
+                pass
 
     os.makedirs("reports", exist_ok=True)
     with open("reports/live_stats.json", "w", encoding="utf-8") as f:
