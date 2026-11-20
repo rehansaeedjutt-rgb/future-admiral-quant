@@ -109,7 +109,7 @@ def evaluate_asset(df, asset_name):
     for name, fn in STRATEGY_VAULT.items():
         ml_sig = apply_ml_filter(df, fn(df))
         stats = run_backtest(df, ml_sig, asset_name, name)
-        score = (stats["net_return"] + (stats["profit_factor"] * 5) - (stats["max_drawdown"] * 1.5)) if stats["total_trades"] >= 3 else -99999
+        score = ((stats["win_rate"] * 0.6) + (stats["profit_factor"] * 12) + stats["net_return"] - (stats["max_drawdown"] * 1.2)) if (stats["total_trades"] >= 3 and stats["profit_factor"] >= 1.0) else -99999
         if score > best_score:
             best_score, best_stats = score, stats
     verdict = get_ai_verdict(asset_name, best_stats["strategy"], best_stats)
@@ -120,16 +120,20 @@ def evaluate_asset(df, asset_name):
 if __name__ == "__main__":
     print("\nSTARTING FUTURE ADMIRAL AI-QUANT ENGINE v2.0...\n")
     results = []
-    assets = [
-        ("BTC/USDT (Binance 1H)", lambda: fetch_binance_data("BTCUSDT", "1h", 1000)),
-        ("ETH/USDT (Binance 1H)", lambda: fetch_binance_data("ETHUSDT", "1h", 1000)),
-        ("SOL/USDT (Binance 1H)", lambda: fetch_binance_data("SOLUSDT", "1h", 1000)),
-        ("BNB/USDT (Binance 1H)", lambda: fetch_binance_data("BNBUSDT", "1h", 1000)),
-        ("NVDA (US Stock 1H)",    lambda: fetch_stock_data("NVDA", "6mo", "1h")),
-        ("TSLA (US Stock 1H)",    lambda: fetch_stock_data("TSLA", "6mo", "1h")),
-        ("AAPL (US Stock 1H)",    lambda: fetch_stock_data("AAPL", "6mo", "1h")),
-        ("SPY (S&P 500 ETF 1H)",  lambda: fetch_stock_data("SPY", "6mo", "1h")),
+    TOP_CRYPTO = [
+        "BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT","XRPUSDT","ADAUSDT","AVAXUSDT","LINKUSDT","DOTUSDT","TRXUSDT",
+        "TONUSDT","SUIUSDT","LTCUSDT","BCHUSDT","NEARUSDT","APTUSDT","ICPUSDT","UNIUSDT","ETCUSDT","XLMUSDT",
+        "HBARUSDT","FILUSDT","ATOMUSDT","ARBUSDT","OPUSDT","INJUSDT","IMXUSDT","STXUSDT","RENDERUSDT","FETUSDT",
+        "TAOUSDT","AAVEUSDT","MKRUSDT","GRTUSDT","VETUSDT","ALGOUSDT","FTMUSDT","SEIUSDT","TIAUSDT","RUNEUSDT",
+        "THETAUSDT","FLOWUSDT","EGLDUSDT","AXSUSDT","SANDUSDT","MANAUSDT","GALAUSDT","CHZUSDT","QNTUSDT","KAVAUSDT"
     ]
+    TOP_STOCKS = [
+        "NVDA","AAPL","MSFT","GOOGL","AMZN","META","TSLA","AVGO","AMD","NFLX",
+        "JPM","V","MA","UNH","LLY","XOM","COST","WMT","HD","PG",
+        "CRM","ORCL","ADBE","SPY","QQQ"
+    ]
+    assets = [(f"{c.replace('USDT','/USDT')} (Binance 1H)", lambda sym=c: fetch_binance_data(sym, "1h", 1000)) for c in TOP_CRYPTO] + \
+             [(f"{s} (US Stock 1H)", lambda sym=s: fetch_stock_data(sym, "6mo", "1h")) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
             winner = evaluate_asset(fetcher(), label)
