@@ -122,9 +122,13 @@ if __name__ == "__main__":
     results = []
     assets = [
         ("BTC/USDT (Binance 1H)", lambda: fetch_binance_data("BTCUSDT", "1h", 1000)),
+        ("ETH/USDT (Binance 1H)", lambda: fetch_binance_data("ETHUSDT", "1h", 1000)),
         ("SOL/USDT (Binance 1H)", lambda: fetch_binance_data("SOLUSDT", "1h", 1000)),
+        ("BNB/USDT (Binance 1H)", lambda: fetch_binance_data("BNBUSDT", "1h", 1000)),
         ("NVDA (US Stock 1H)",    lambda: fetch_stock_data("NVDA", "6mo", "1h")),
+        ("TSLA (US Stock 1H)",    lambda: fetch_stock_data("TSLA", "6mo", "1h")),
         ("AAPL (US Stock 1H)",    lambda: fetch_stock_data("AAPL", "6mo", "1h")),
+        ("SPY (S&P 500 ETF 1H)",  lambda: fetch_stock_data("SPY", "6mo", "1h")),
     ]
     for label, fetcher in assets:
         try:
