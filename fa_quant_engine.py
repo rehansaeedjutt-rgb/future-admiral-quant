@@ -109,7 +109,7 @@ def evaluate_asset(df, asset_name):
     for name, fn in STRATEGY_VAULT.items():
         ml_sig = apply_ml_filter(df, fn(df))
         stats = run_backtest(df, ml_sig, asset_name, name)
-        score = stats["net_return"] + (stats["profit_factor"] * 5) - (stats["max_drawdown"] * 1.5)
+        score = (stats["net_return"] + (stats["profit_factor"] * 5) - (stats["max_drawdown"] * 1.5)) if stats["total_trades"] >= 3 else -99999
         if score > best_score:
             best_score, best_stats = score, stats
     verdict = get_ai_verdict(asset_name, best_stats["strategy"], best_stats)
