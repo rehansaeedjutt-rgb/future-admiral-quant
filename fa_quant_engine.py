@@ -1,3 +1,4 @@
+import math
 import os, json, requests, yfinance as yf, pandas as pd, numpy as np
 from datetime import datetime, timezone
 from dotenv import load_dotenv
@@ -143,7 +144,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error on {label}: {e}")
     # CLEAN FILTER & TOP-5 DISCORD DISPATCH
-    results = [r for r in results if r.get("win_rate", 0) > 0]
+    results = [r for r in results if r.get("total_trades", 0) >= 15 and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
     results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
     for top in results[:5]:
         try:
