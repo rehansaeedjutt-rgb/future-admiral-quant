@@ -142,6 +142,11 @@ if __name__ == "__main__":
             send_discord_report(winner, winner["ai_verdict"])
         except Exception as e:
             print(f"Error on {label}: {e}")
+    # TOP 5 DISCORD DISPATCH (Prevents Discord Rate-Limit & Highlights Highest Win-Rate Setups)
+    results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
+    for top in results[:5]:
+        send_discord_alert(top["asset"], top["strategy"], top, top["ai_verdict"])
+
     os.makedirs("reports", exist_ok=True)
     with open("reports/live_stats.json", "w", encoding="utf-8") as f:
         json.dump({"brand": "Future Admiral", "results": results}, f, indent=2)
