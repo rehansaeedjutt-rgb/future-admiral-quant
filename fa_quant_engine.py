@@ -197,4 +197,9 @@ if __name__ == "__main__":
     os.makedirs("reports", exist_ok=True)
     with open("reports/live_stats.json", "w", encoding="utf-8") as f:
         json.dump({"brand": "Future Admiral", "results": results}, f, indent=2)
-    print("\nWebsite JSON saved to reports/live_stats.json")
+    print("\nWebsite JSON saved to reports/live_stats.json"
+    verified_pairs = {(r["asset"], r["strategy"]) for r in results}
+    verified_trades = [t for t in AUDIT_TRADES if (t["asset"], t["strategy"]) in verified_pairs]
+    pd.DataFrame(verified_trades).to_csv("reports/audit_trade_log.csv", index=False)
+    print(f"Audit Trade Log saved to reports/audit_trade_log.csv ({len(verified_trades)} verified trades)")
+)
