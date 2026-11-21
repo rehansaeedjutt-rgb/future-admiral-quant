@@ -10,6 +10,7 @@ from ai_models.llm_analyst import get_ai_verdict
 load_dotenv()
 
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")
+AUDIT_TRADES = []
 INITIAL_CAPITAL     = float(os.getenv("ACCOUNT_EQUITY", 10000.0))
 MAX_RISK_PCT        = float(os.getenv("MAX_RISK_PER_TRADE", 1.0))
 FEE_RATE            = 0.001
@@ -39,23 +40,34 @@ def fetch_stock_data(ticker="NVDA", period="6mo", interval="1h"):
     return df[["timestamp","open","high","low","close","volume"]].dropna()
 
 def run_backtest(df, signals, asset_name, strategy_name):
-    capital, position, entry_price, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, [], []
+    capital, position, entry_price, entry_date, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, None, [], []
     slippage = 0.0005  # 0.05% per-side slippage on top of FEE_RATE (0.10%)
     total_cost = FEE_RATE + slippage
 
     for i in range(1, len(df)):
         exec_open = float(df["open"].iloc[i])
         close_px  = float(df["close"].iloc[i])
-        prev_sig  = int(signals.iloc[i - 1])  # Strict shift(1): act only on prior bar's confirmed close
+        bar_date  = str(df["timestamp"].iloc[i])[:10]
+        prev_sig  = int(signals.iloc[i - 1])  # Strict shift(1): zero look-ahead bias
 
         if prev_sig == 1 and position == 0:
             fill_px = exec_open * (1 + slippage)
             position = (capital * (1 - FEE_RATE)) / fill_px
-            entry_price, capital = fill_px, 0.0
+            entry_price, entry_date, capital = fill_px, bar_date, 0.0
         elif prev_sig == -1 and position > 0:
             fill_px = exec_open * (1 - slippage)
             capital = (position * fill_px) * (1 - FEE_RATE)
-            trades.append(((fill_px - entry_price) / entry_price) * 100 - (total_cost * 200))
+            net_pnl = ((fill_px - entry_price) / entry_price) * 100 - (total_cost * 200)
+            trades.append(net_pnl)
+            AUDIT_TRADES.append({
+                "asset": asset_name,
+                "strategy": strategy_name,
+                "entry_date": entry_date,
+                "entry_price": round(entry_price, 4),
+                "exit_date": bar_date,
+                "exit_price": round(fill_px, 4),
+                "net_pnl_pct": round(net_pnl, 2)
+            })
             position = 0.0
 
         eq.append(capital if position == 0 else position * close_px)
@@ -71,13 +83,26 @@ def run_backtest(df, signals, asset_name, strategy_name):
     eq_s = pd.Series(eq)
     dd = ((eq_s - eq_s.cummax()) / eq_s.cummax() * 100).min()
     max_dd = abs(dd) if not np.isnan(dd) else 0.0
-    status = "LONG / BULLISH" if int(signals.iloc[-1]) == 1 else "FLAT / BEARISH"
+
+    # Live Actionable Levels (ATR-14 based SL & TP + Exact Candle Date)
+    tr = pd.concat([
+        df["high"] - df["low"],
+        (df["high"] - df["close"].shift(1)).abs(),
+        (df["low"] - df["close"].shift(1)).abs()
+    ], axis=1).max(axis=1)
+    atr = float(tr.rolling(14).mean().iloc[-1]) if len(df) >= 14 else float(df["close"].iloc[-1] * 0.02)
+    last_px = float(df["close"].iloc[-1])
+    last_date = str(df["timestamp"].iloc[-1])[:10]
+    last_sig = int(signals.iloc[-1])
+    status = "BUY / LONG" if last_sig == 1 else ("EXIT / SELL" if last_sig == -1 else "FLAT / STANDBY")
+    sl_px = round(last_px - (1.5 * atr), 4)
+    tp_px = round(last_px + (2.5 * atr), 4)
 
     return {
         "asset": asset_name,
         "strategy": strategy_name,
         "price": round(float(df["close"].iloc[-1]), 2),
-        "status": status,
+        "status": status, "candle_date": last_date, "stop_loss": sl_px, "take_profit": tp_px,
         "total_trades": len(trades),
         "win_rate": round(wr, 2),
         "profit_factor": round(pf, 2),
@@ -96,7 +121,12 @@ def send_discord_report(stats, ai_verdict):
         "username": "Future Admiral AI-Quant Desk",
         "embeds": [{
             "title": f"TOP QUANT STRATEGY - {stats['asset']}",
-            "description": f"**Winner:** `{stats['strategy']}`\n**Signal:** {stats['status']} | **Price:** `${stats['price']:,.2f}`\n\n**AI Analyst Verdict:**\n> {ai_verdict}",
+            "description": (
+            f"**Winner:** `{stats['strategy']}`\n"
+            f"**Signal:** `{stats['status']}` | **Candle Date:** `{stats.get('candle_date', 'N/A')}`\n"
+            f"**Entry / Close:** `${stats['price']:,.2f}` | **Stop Loss:** `${stats.get('stop_loss', 0):,.2f}` | **Take Profit:** `${stats.get('take_profit', 0):,.2f}`\n\n"
+            f"**AI Analyst Verdict:**\n> {ai_verdict}"
+        ),
             "color": color,
             "fields": [
                 {"name": "Net Return", "value": f"**{stats['net_return']}%**", "inline": True},
