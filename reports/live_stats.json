@@ -17,17 +17,17 @@
       "final_equity": 21231.55,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 58.63 with -22.73% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:22.720775+00:00",
+      "updated_at": "2026-11-21T17:28:22.833788+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
       "asset": "UNI/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 4.76,
+      "price": 4.75,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 3.9871,
-      "take_profit": 6.0454,
+      "stop_loss": 3.9761,
+      "take_profit": 6.0344,
       "total_trades": 15,
       "win_rate": 93.33,
       "profit_factor": 18.58,
@@ -36,7 +36,7 @@
       "final_equity": 30100.12,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 18.58 with -12.27% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:02:53.414224+00:00",
+      "updated_at": "2026-11-21T17:26:38.337049+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -52,10 +52,10 @@
       "profit_factor": 11.93,
       "max_drawdown": 7.94,
       "net_return": 131.62,
-      "final_equity": 23162.07,
+      "final_equity": 23162.06,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 11.93 with -7.94% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:57.047760+00:00",
+      "updated_at": "2026-11-21T17:28:55.347233+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -64,8 +64,8 @@
       "price": 0.25,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 0.2141,
-      "take_profit": 0.3083,
+      "stop_loss": 0.2147,
+      "take_profit": 0.3089,
       "total_trades": 31,
       "win_rate": 87.1,
       "profit_factor": 11.87,
@@ -74,17 +74,17 @@
       "final_equity": 442486.67,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 11.87 with -24.82% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:03:16.110485+00:00",
+      "updated_at": "2026-11-21T17:26:59.780092+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
       "asset": "SOL/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 70.87,
+      "price": 70.83,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 63.4536,
-      "take_profit": 83.2307,
+      "stop_loss": 63.4136,
+      "take_profit": 83.1907,
       "total_trades": 15,
       "win_rate": 86.67,
       "profit_factor": 15.95,
@@ -93,17 +93,17 @@
       "final_equity": 75248.32,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 15.95 with -21.56% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:02:21.560097+00:00",
+      "updated_at": "2026-11-21T17:26:08.434541+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
       "asset": "ETH/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 1688.57,
+      "price": 1686.4,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 1503.6532,
-      "take_profit": 1996.7646,
+      "stop_loss": 1501.4832,
+      "take_profit": 1994.5946,
       "total_trades": 67,
       "win_rate": 85.07,
       "profit_factor": 8.05,
@@ -112,7 +112,7 @@
       "final_equity": 270408.2,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 8.05 with -20.88% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:02:17.103282+00:00",
+      "updated_at": "2026-11-21T17:26:03.526519+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -131,7 +131,7 @@
       "final_equity": 15533.09,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 23.74 with -4.31% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:58.147675+00:00",
+      "updated_at": "2026-11-21T17:29:55.196948+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -147,10 +147,10 @@
       "profit_factor": 13.0,
       "max_drawdown": 4.08,
       "net_return": 76.24,
-      "final_equity": 17624.08,
+      "final_equity": 17624.07,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 13.0 with -4.08% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:31.813565+00:00",
+      "updated_at": "2026-11-21T17:28:31.387255+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -166,20 +166,20 @@
       "profit_factor": 10.11,
       "max_drawdown": 8.85,
       "net_return": 94.03,
-      "final_equity": 19402.97,
+      "final_equity": 19402.99,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 10.11 with -8.85% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:17.403956+00:00",
+      "updated_at": "2026-11-21T17:28:17.820087+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
       "asset": "BTC/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 60245.11,
+      "price": 60243.54,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 55382.9843,
-      "take_profit": 68348.6529,
+      "stop_loss": 55381.4143,
+      "take_profit": 68347.0829,
       "total_trades": 28,
       "win_rate": 82.14,
       "profit_factor": 17.37,
@@ -188,7 +188,7 @@
       "final_equity": 32170.14,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 17.37 with -14.51% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:02:14.706772+00:00",
+      "updated_at": "2026-11-21T17:26:00.801492+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -204,10 +204,10 @@
       "profit_factor": 7.54,
       "max_drawdown": 10.62,
       "net_return": 180.3,
-      "final_equity": 28030.1,
+      "final_equity": 28030.18,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 7.54 with -10.62% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:43.793663+00:00",
+      "updated_at": "2026-11-21T17:29:41.263066+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -226,7 +226,7 @@
       "final_equity": 13430.8,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: EXIT / SELL | Edge: PF 10.74 with -2.56% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:38.989823+00:00",
+      "updated_at": "2026-11-21T17:28:38.343895+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -245,7 +245,7 @@
       "final_equity": 16854.54,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 14.09 with -4.48% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:47.419411+00:00",
+      "updated_at": "2026-11-21T17:29:44.701838+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -261,10 +261,10 @@
       "profit_factor": 6.19,
       "max_drawdown": 8.82,
       "net_return": 119.57,
-      "final_equity": 21956.6,
+      "final_equity": 21956.62,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 6.19 with -8.82% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:04.271652+00:00",
+      "updated_at": "2026-11-21T17:29:02.454742+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -280,20 +280,20 @@
       "profit_factor": 7.65,
       "max_drawdown": 8.99,
       "net_return": 150.47,
-      "final_equity": 25046.82,
+      "final_equity": 25046.85,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 7.65 with -8.99% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:13.752684+00:00",
+      "updated_at": "2026-11-21T17:28:14.524069+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
       "asset": "ADA/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 0.14,
+      "price": 0.15,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 0.1285,
-      "take_profit": 0.1722,
+      "stop_loss": 0.1294,
+      "take_profit": 0.1731,
       "total_trades": 30,
       "win_rate": 80.0,
       "profit_factor": 10.94,
@@ -302,7 +302,7 @@
       "final_equity": 128478.92,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 10.94 with -24.13% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:02:26.317559+00:00",
+      "updated_at": "2026-11-21T17:26:13.142239+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -318,29 +318,10 @@
       "profit_factor": 8.02,
       "max_drawdown": 5.04,
       "net_return": 25.92,
-      "final_equity": 12592.32,
+      "final_equity": 12592.27,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 8.02 with -5.04% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:49.097744+00:00",
-      "tier": "TIER 1 (80%+ ELITE)"
-    },
-    {
-      "asset": "HON (US Stock 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 212.64,
-      "status": "FLAT / STANDBY",
-      "candle_date": "2026-11-20",
-      "stop_loss": 202.6733,
-      "take_profit": 229.2512,
-      "total_trades": 15,
-      "win_rate": 80.0,
-      "profit_factor": 3.19,
-      "max_drawdown": 10.33,
-      "net_return": 24.36,
-      "final_equity": 12436.48,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 3.19 with -10.33% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:27.179712+00:00",
+      "updated_at": "2026-11-21T17:29:46.254361+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -356,10 +337,10 @@
       "profit_factor": 6.39,
       "max_drawdown": 5.1,
       "net_return": 38.37,
-      "final_equity": 13837.38,
+      "final_equity": 13837.39,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: EXIT / SELL | Edge: PF 6.39 with -5.1% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:37.054127+00:00",
+      "updated_at": "2026-11-21T17:28:36.659729+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -375,29 +356,10 @@
       "profit_factor": 4.58,
       "max_drawdown": 11.69,
       "net_return": 159.7,
-      "final_equity": 25969.89,
+      "final_equity": 25969.87,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 4.58 with -11.69% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:05:23.592021+00:00",
-      "tier": "TIER 2 (75%-79%)"
-    },
-    {
-      "asset": "MRK (US Stock 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 133.72,
-      "status": "FLAT / STANDBY",
-      "candle_date": "2026-11-20",
-      "stop_loss": 127.0461,
-      "take_profit": 144.8432,
-      "total_trades": 39,
-      "win_rate": 76.92,
-      "profit_factor": 8.17,
-      "max_drawdown": 8.3,
-      "net_return": 99.58,
-      "final_equity": 19958.47,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 8.17 with -8.3% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:58.812861+00:00",
+      "updated_at": "2026-11-21T17:29:21.627277+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -416,7 +378,7 @@
       "final_equity": 14949.1,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 2.34 with -22.95% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:44.442130+00:00",
+      "updated_at": "2026-11-21T17:28:43.334003+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -431,11 +393,11 @@
       "win_rate": 76.79,
       "profit_factor": 3.48,
       "max_drawdown": 20.52,
-      "net_return": 200.62,
-      "final_equity": 30061.5,
+      "net_return": 200.61,
+      "final_equity": 30061.48,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 3.48 with -20.52% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:33.600772+00:00",
+      "updated_at": "2026-11-21T17:28:33.071729+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -454,7 +416,7 @@
       "final_equity": 15413.05,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 6.49 with -10.61% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:47.983015+00:00",
+      "updated_at": "2026-11-21T17:28:46.701138+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -470,10 +432,10 @@
       "profit_factor": 1.53,
       "max_drawdown": 17.75,
       "net_return": 24.48,
-      "final_equity": 12447.61,
+      "final_equity": 12447.6,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 1.53 with -17.75% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:40.857224+00:00",
+      "updated_at": "2026-11-21T17:28:39.945573+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -489,10 +451,10 @@
       "profit_factor": 2.71,
       "max_drawdown": 10.58,
       "net_return": 72.65,
-      "final_equity": 17264.73,
+      "final_equity": 17264.76,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 2.71 with -10.58% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:10.084441+00:00",
+      "updated_at": "2026-11-21T17:28:11.145780+00:00",
       "tier": "TIER 2 (75%-79%)"
     },
     {
@@ -508,10 +470,10 @@
       "profit_factor": 3.87,
       "max_drawdown": 9.2,
       "net_return": 62.36,
-      "final_equity": 16236.43,
+      "final_equity": 16236.42,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 3.87 with -9.2% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T17:04:11.847433+00:00",
+      "updated_at": "2026-11-21T17:28:12.780744+00:00",
       "tier": "TIER 2 (75%-79%)"
     }
   ]
