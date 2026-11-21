@@ -140,23 +140,39 @@ def run_backtest(df, signals, asset_name, strategy_name):
         "max_risk_usd": round(INITIAL_CAPITAL * (MAX_RISK_PCT / 100.0), 2)
     }
 
-_WEEKEND_NOTICE_SENT = False
+import json, os
+
+_SENT_FILE = "reports/sent_signals.json"
+
+def _load_sent():
+    if os.path.exists(_SENT_FILE):
+        try:
+            return json.load(open(_SENT_FILE, "r", encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+def _save_sent(data):
+    os.makedirs("reports", exist_ok=True)
+    with open(_SENT_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
 
 def send_discord_report(stats, ai_verdict):
-    global _WEEKEND_NOTICE_SENT
     if not DISCORD_WEBHOOK_URL or "YAHAN-PASTE-KARO" in DISCORD_WEBHOOK_URL:
         return
 
+    sent = _load_sent()
+    today_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     asset = stats.get("asset", "")
     is_stock = "US Stock" in asset
     is_weekend = datetime.now(timezone.utc).weekday() >= 5
     raw_status = stats.get("status", "FLAT / STANDBY")
 
-    # 1. Weekend US Stocks: send ONE clean notice only, no spam
+    # 1. Weekend US Stocks: send ONCE per weekend day
     if is_stock and is_weekend:
-        if _WEEKEND_NOTICE_SENT:
+        key = f"WEEKEND_{today_utc}"
+        if sent.get(key):
             return
-        _WEEKEND_NOTICE_SENT = True
         payload = {
             "username": "Future Admiral Signals",
             "embeds": [{
@@ -167,12 +183,16 @@ def send_discord_report(stats, ai_verdict):
         }
         try:
             requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10)
+            sent[key] = True
+            _save_sent(sent)
         except Exception as e:
             print(f"Discord error: {e}")
         return
 
-    # 2. Only send live actionable BUY or EXIT signals to customers
+    # 2. Live BUY or EXIT signals: send ONCE per asset + status + candle date
+    candle_date = str(stats.get("candle_date", today_utc))
     if "BUY" in raw_status or "LONG" in raw_status:
+        sig_type = "BUY"
         title = f"BUY SIGNAL: {asset}"
         color = 0x00E5A0
         desc = (
@@ -180,18 +200,22 @@ def send_discord_report(stats, ai_verdict):
             f"**Entry Price:** `${stats['price']:,.2f}`\n"
             f"**Stop Loss:** `${stats.get('stop_loss', 0):,.2f}`\n"
             f"**Take Profit:** `${stats.get('take_profit', 0):,.2f}`\n"
-            f"**Candle Date:** `{stats.get('candle_date', 'N/A')}`"
+            f"**Candle Date:** `{candle_date}`"
         )
     elif "EXIT" in raw_status or "SELL" in raw_status:
+        sig_type = "EXIT"
         title = f"EXIT / TAKE PROFIT: {asset}"
         color = 0xF59E0B
         desc = (
             f"**Action:** `CLOSE LONG POSITION`\n"
             f"**Exit Price:** `${stats['price']:,.2f}`\n"
-            f"**Candle Date:** `{stats.get('candle_date', 'N/A')}`"
+            f"**Candle Date:** `{candle_date}`"
         )
     else:
-        # No active trade setup -> do NOT spam customers
+        return
+
+    sig_key = f"{asset}|{sig_type}|{candle_date}"
+    if sent.get(sig_key):
         return
 
     payload = {
@@ -205,6 +229,8 @@ def send_discord_report(stats, ai_verdict):
     }
     try:
         requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10)
+        sent[sig_key] = True
+        _save_sent(sent)
     except Exception as e:
         print(f"Discord error: {e}")
 
