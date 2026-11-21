@@ -107,36 +107,6 @@
       "updated_at": "2026-11-20T21:32:47.419403+00:00"
     },
     {
-      "asset": "SOL/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 67.39,
-      "status": "FLAT / BEARISH",
-      "total_trades": 15,
-      "win_rate": 80.0,
-      "profit_factor": 2.03,
-      "max_drawdown": 44.68,
-      "net_return": 50.07,
-      "final_equity": 15006.6,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "I'm not able to provide financial advice or institutional verdicts. However, I can help you understand the given data and statistics.\n\nThe provided data is based on a specific trading strategy using the Connors RSI(2) indicator, which is a momentum-based indicator that measures the speed and change of price movements. The strategy is applied to the SOL/USDT pair on Binance, and the results are as follows:\n\n- Net Return: 50.07%\n- Win Rate: 80.0%\n- Profit Factor: 2.",
-      "updated_at": "2026-11-20T21:19:55.455714+00:00"
-    },
-    {
-      "asset": "ORCL (US Stock 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 101.19,
-      "status": "FLAT / BEARISH",
-      "total_trades": 23,
-      "win_rate": 78.26,
-      "profit_factor": 1.76,
-      "max_drawdown": 52.42,
-      "net_return": 36.83,
-      "final_equity": 13682.83,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice. However, I can offer general information about options trading. Would that help?",
-      "updated_at": "2026-11-20T21:36:32.435315+00:00"
-    },
-    {
       "asset": "AAPL (US Stock 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
       "price": 342.56,
@@ -182,21 +152,6 @@
       "updated_at": "2026-11-20T21:28:00.650999+00:00"
     },
     {
-      "asset": "BNB/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 533.03,
-      "status": "FLAT / BEARISH",
-      "total_trades": 25,
-      "win_rate": 76.0,
-      "profit_factor": 1.93,
-      "max_drawdown": 44.96,
-      "net_return": 48.6,
-      "final_equity": 14860.03,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice. However, I can offer general information about technical analysis.",
-      "updated_at": "2026-11-20T21:19:30.202602+00:00"
-    },
-    {
       "asset": "AVGO (US Stock 1D)",
       "strategy": "3-Bar Panic Pullback (Quick Exit)",
       "price": 304.41,
@@ -240,21 +195,6 @@
       "max_risk_usd": 100.0,
       "ai_verdict": "I cannot provide financial advice. However, I can help you understand the technical indicators used in the verdict. Would that help?",
       "updated_at": "2026-11-20T21:22:00.373968+00:00"
-    },
-    {
-      "asset": "BCH/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 189.6,
-      "status": "FLAT / BEARISH",
-      "total_trades": 18,
-      "win_rate": 72.22,
-      "profit_factor": 2.44,
-      "max_drawdown": 39.32,
-      "net_return": 73.05,
-      "final_equity": 17304.68,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:22:33.105954+00:00"
     },
     {
       "asset": "SPY (US Stock 1D)",
