@@ -14,10 +14,10 @@
       "profit_factor": 55.93,
       "max_drawdown": 17.68,
       "net_return": 211.51,
-      "final_equity": 31150.85,
+      "final_equity": 31150.86,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-21T12:41:20.728878+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 55.93 with -17.68% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:14.894682+00:00"
     },
     {
       "asset": "COST (US Stock 1D)",
@@ -34,17 +34,17 @@
       "net_return": 33.74,
       "final_equity": 13373.9,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-21T12:45:52.337400+00:00"
+      "ai_verdict": "Regime: EXIT / SELL | Edge: PF 4.13 with -7.94% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:45.685822+00:00"
     },
     {
       "asset": "AAVE/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 100.11,
+      "price": 100.1,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 86.4932,
-      "take_profit": 122.8046,
+      "stop_loss": 86.3825,
+      "take_profit": 122.9625,
       "total_trades": 26,
       "win_rate": 88.46,
       "profit_factor": 10.37,
@@ -52,8 +52,8 @@
       "net_return": 731.5,
       "final_equity": 83149.74,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-21T12:33:09.068923+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 10.37 with -24.93% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:07:28.876334+00:00"
     },
     {
       "asset": "NFLX (US Stock 1D)",
@@ -70,8 +70,8 @@
       "net_return": 68.87,
       "final_equity": 16886.52,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm not able to provide financial advice.",
-      "updated_at": "2026-11-21T12:43:51.292231+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 67.17 with -5.55% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:32.247307+00:00"
     },
     {
       "asset": "MA (US Stock 1D)",
@@ -86,10 +86,10 @@
       "profit_factor": 7.3,
       "max_drawdown": 8.39,
       "net_return": 61.06,
-      "final_equity": 16105.99,
+      "final_equity": 16105.98,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice. However, I can help you write a 2-sentence institutional verdict for MA (US Stock 1D) using 'Connors RSI(2) Extreme (<5)' based on the provided stats. \n\nHere's a possible verdict:\n\n\"Based on the Connors RSI(2) Extreme (<5) indicator, we are entering a FLAT / STANDBY mode at $625.59, as the stock's recent price action suggests a lack of directional momentum, warranting caution and",
-      "updated_at": "2026-11-21T12:45:10.786568+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 7.3 with -8.39% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:38.021342+00:00"
     },
     {
       "asset": "GOOGL (US Stock 1D)",
@@ -104,19 +104,19 @@
       "profit_factor": 4.17,
       "max_drawdown": 9.48,
       "net_return": 56.58,
-      "final_equity": 15657.87,
+      "final_equity": 15657.86,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm not able to provide personalized financial or investment advice, but I can offer general information about options trading. Would that help?",
-      "updated_at": "2026-11-21T12:42:24.671860+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 4.17 with -9.48% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:20.757899+00:00"
     },
     {
       "asset": "BTC/USDT (Binance 1D)",
       "strategy": "3-Bar Panic Pullback (Quick Exit)",
-      "price": 58442.67,
+      "price": 58994.94,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-21",
-      "stop_loss": 53767.8236,
-      "take_profit": 66234.0807,
+      "stop_loss": 54320.0936,
+      "take_profit": 66786.3507,
       "total_trades": 20,
       "win_rate": 80.0,
       "profit_factor": 6.38,
@@ -124,8 +124,8 @@
       "net_return": 86.55,
       "final_equity": 18654.54,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I cannot provide financial advice. However, I can help you understand the 3-Bar Panic Pullback (Quick Exit) strategy. Would you like to know more about this strategy?",
-      "updated_at": "2026-11-21T12:21:57.489547+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 6.38 with -17.34% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:06:14.316282+00:00"
     },
     {
       "asset": "AAPL (US Stock 1D)",
@@ -140,10 +140,10 @@
       "profit_factor": 7.92,
       "max_drawdown": 8.4,
       "net_return": 68.5,
-      "final_equity": 16849.64,
+      "final_equity": 16849.65,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide real-time financial advice or institutional verdicts. However, I can provide general information about technical analysis and risk management strategies.\n\n Connors RSI(2) is a momentum indicator that measures the speed and change of price movements. An RSI value below 5 is considered an \"extreme\" oversold condition, indicating a potential buying opportunity.\n\nWhen evaluating the institutional verdict for AAPL, consider the following:\n\n1.  **Net Return**: A 68.5% net return indicates significant capital appreciation, which may be",
-      "updated_at": "2026-11-21T12:41:52.605081+00:00"
+      "ai_verdict": "Regime: BUY / LONG | Edge: PF 7.92 with -8.4% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:16.866544+00:00"
     },
     {
       "asset": "QQQ (US Stock 1D)",
@@ -160,8 +160,8 @@
       "net_return": 95.25,
       "final_equity": 19524.86,
       "max_risk_usd": 100.0,
-      "ai_verdict": "Based on the Connors RSI(2) Extreme (<5) indicator, I am issuing a FLAT / STANDBY recommendation for QQQ, as the extreme oversold conditions have been met at $608.45, indicating a potential buying opportunity. However, given the recent high and the lack of a clear breakout, I am exercising caution and recommending a wait-and-see approach, rather than initiating a new position.",
-      "updated_at": "2026-11-21T12:48:39.059961+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 6.39 with -7.58% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:09:01.329058+00:00"
     },
     {
       "asset": "MKR/USDT (Binance 1D)",
@@ -178,8 +178,26 @@
       "net_return": 325.52,
       "final_equity": 42552.11,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-21T12:33:18.308936+00:00"
+      "ai_verdict": "Regime: EXIT / SELL | Edge: PF 4.88 with -19.5% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:07:31.262074+00:00"
+    },
+    {
+      "asset": "AVGO (US Stock 1D)",
+      "strategy": "3-Bar Panic Pullback (Quick Exit)",
+      "price": 304.41,
+      "status": "FLAT / STANDBY",
+      "candle_date": "2026-11-20",
+      "stop_loss": 269.4354,
+      "take_profit": 362.7011,
+      "total_trades": 24,
+      "win_rate": 75.0,
+      "profit_factor": 10.98,
+      "max_drawdown": 7.87,
+      "net_return": 132.37,
+      "final_equity": 23237.42,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 10.98 with -7.87% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:28.354041+00:00"
     },
     {
       "asset": "WMT (US Stock 1D)",
@@ -196,17 +214,17 @@
       "net_return": 177.17,
       "final_equity": 27717.39,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-21T12:46:03.897394+00:00"
+      "ai_verdict": "Regime: EXIT / SELL | Edge: PF 6.63 with -8.44% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:47.736379+00:00"
     },
     {
       "asset": "TRX/USDT (Binance 1D)",
       "strategy": "IBS + RSI(2) Institutional Snapback",
       "price": 0.3,
-      "status": "FLAT / STANDBY",
+      "status": "EXIT / SELL",
       "candle_date": "2026-11-21",
-      "stop_loss": 0.2965,
-      "take_profit": 0.3139,
+      "stop_loss": 0.297,
+      "take_profit": 0.3144,
       "total_trades": 37,
       "win_rate": 72.97,
       "profit_factor": 14.7,
@@ -214,8 +232,8 @@
       "net_return": 391.28,
       "final_equity": 49127.91,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I cannot provide financial advice. However, I can help you write a 2-sentence institutional verdict for TRX/USDT (Binance 1D) based on the provided statistics. \r\n\r\nHere is a possible verdict:\r\n\r\n\"Based on our IBS (Institutional Breadth Score) of 0.75 and RSI(14) of 42, indicating a moderate level of institutional participation and a slight oversold condition, we are witnessing a potential snapback opportunity. We recommend a FLAT/STANDBY position at",
-      "updated_at": "2026-11-21T12:24:57.308128+00:00"
+      "ai_verdict": "Regime: EXIT / SELL | Edge: PF 14.7 with -7.21% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:06:35.703224+00:00"
     },
     {
       "asset": "SPY (US Stock 1D)",
@@ -230,10 +248,10 @@
       "profit_factor": 4.24,
       "max_drawdown": 5.07,
       "net_return": 73.29,
-      "final_equity": 17329.22,
+      "final_equity": 17329.18,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm not able to provide financial advice. However, I can help you write a 2-sentence institutional verdict for SPY (US Stock 1D) using 'Connors RSI(2) Extreme (<5)'. \n\nAt Future Admiral, we strongly recommend a FLAT / STANDBY stance on SPY, given its current RSI(2) reading below 5, indicating a potential oversold condition, and a recent price action suggesting a possible reversal. Given the historical performance metrics, we are cautiously optimistic about the",
-      "updated_at": "2026-11-21T12:48:08.881601+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 4.24 with -5.07% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:59.297851+00:00"
     },
     {
       "asset": "JPM (US Stock 1D)",
@@ -248,10 +266,10 @@
       "profit_factor": 2.09,
       "max_drawdown": 16.2,
       "net_return": 42.9,
-      "final_equity": 14289.68,
+      "final_equity": 14289.69,
       "max_risk_usd": 100.0,
-      "ai_verdict": "Based on the Connors RSI(2) Extreme (<5) indicator, I am recommending a FLAT / STANDBY position at $310.53 for JPM, as the stock's recent price action has generated a strong sell signal that warrants caution. Given the stock's impressive historical performance, we should exercise extreme caution and wait for a stronger signal before considering a new long position, as the risk of a sharp decline outweighs the potential reward.",
-      "updated_at": "2026-11-21T12:44:18.189292+00:00"
+      "ai_verdict": "Regime: FLAT / STANDBY | Edge: PF 2.09 with -16.2% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:34.148353+00:00"
     },
     {
       "asset": "V (US Stock 1D)",
@@ -266,10 +284,10 @@
       "profit_factor": 4.12,
       "max_drawdown": 8.98,
       "net_return": 52.83,
-      "final_equity": 15283.17,
+      "final_equity": 15283.18,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm not able to provide real-time financial advice or institutional verdicts. However, I can help you understand the Connors RSI(2) Extreme (<5) indicator and its implications for the V (US Stock 1D) trade.\n\nThe Connors RSI(2) Extreme (<5) indicator is a variation of the Relative Strength Index (RSI) that signals oversold conditions when the RSI falls below 5. In this case, the signal is BUY/LONG at $401.87, indicating that the stock is",
-      "updated_at": "2026-11-21T12:44:45.379503+00:00"
+      "ai_verdict": "Regime: BUY / LONG | Edge: PF 4.12 with -8.98% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T13:08:36.129722+00:00"
     }
   ]
 }
