@@ -15,16 +15,44 @@ INITIAL_CAPITAL     = float(os.getenv("ACCOUNT_EQUITY", 10000.0))
 MAX_RISK_PCT        = float(os.getenv("MAX_RISK_PER_TRADE", 1.0))
 FEE_RATE            = 0.001
 
-def fetch_binance_data(symbol="BTCUSDT", interval="1h", limit=1000):
-    print(f"Fetching Binance Data: {symbol} ({interval})...")
-    url = f"https://data-api.binance.vision/api/v3/klines?symbol={symbol}&interval={interval}&limit={limit}"
-    r = requests.get(url, timeout=20)
-    r.raise_for_status()
-    df = pd.DataFrame(r.json(), columns=["timestamp","open","high","low","close","volume","ct","qav","nt","tb","tq","ig"])
-    for col in ["open","high","low","close","volume"]:
-        df[col] = df[col].astype(float)
+_HTTP_SESSION = requests.Session()
+
+def fetch_binance_data(symbol, interval="1d", total_candles=2200):
+    print(f"Fetching Binance Data: {symbol} ({interval}) [6Y]...")
+    url = "https://data-api.binance.vision/api/v3/klines"
+    all_rows = []
+    end_time = None
+    while len(all_rows) < total_candles:
+        params = {"symbol": symbol, "interval": interval, "limit": 1000}
+        if end_time is not None:
+            params["endTime"] = end_time
+        data = None
+        for attempt in range(3):
+            try:
+                resp = _HTTP_SESSION.get(url, params=params, timeout=10)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    break
+            except Exception:
+                pass
+        if not isinstance(data, list) or len(data) == 0:
+            break
+        all_rows = data + all_rows
+        end_time = data[0][0] - 1
+        if len(data) < 1000:
+            break
+    if not all_rows:
+        raise ValueError(f"No Binance data returned for {symbol}")
+    all_rows = all_rows[-total_candles:]
+    df = pd.DataFrame(all_rows, columns=[
+        "timestamp", "open", "high", "low", "close", "volume",
+        "close_time", "qav", "num_trades", "taker_base", "taker_quote", "ignore"
+    ])
     df["timestamp"] = pd.to_datetime(df["timestamp"], unit="ms")
-    return df[["timestamp","open","high","low","close","volume"]]
+    for col in ["open", "high", "low", "close", "volume"]:
+        df[col] = df[col].astype(float)
+    return df[["timestamp", "open", "high", "low", "close", "volume"]]
+
 
 def fetch_stock_data(ticker="NVDA", period="6mo", interval="1h"):
     print(f"Fetching US Stock Data: {ticker} ({interval})...")
@@ -210,8 +238,25 @@ if __name__ == "__main__":
         "JPM","V","MA","UNH","LLY","XOM","COST","WMT","HD","PG",
         "CRM","ORCL","ADBE","SPY","QQQ", "BRK-B", "JNJ", "ABBV", "MRK", "PEP", "KO", "MCD", "DIS", "CSCO", "IBM", "TXN", "QCOM", "INTU", "NOW", "GS", "MS", "BLK", "CAT", "DE", "HON", "UNP", "LMT", "RTX", "LOW", "TJX", "NKE", "SBUX", "CVX", "COP", "NEE", "IWM", "DIA", "XLK", "XLF", "XLV", "XLE", "SMH"
     ]
-    assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 1000)) for c in TOP_CRYPTO] + \
-             [(f"{s} (US Stock 1D)", lambda sym=s: fetch_stock_data(sym, "3y", "1d")) for s in TOP_STOCKS]
+    print("Batch-downloading 6Y data for all US Stocks in one request...")
+    _STOCK_BATCH = yf.download(TOP_STOCKS, period="6y", interval="1d", group_by="ticker", threads=True, progress=False)
+
+    def _get_batch_stock(sym):
+        df = _STOCK_BATCH[sym].dropna(how="all").reset_index()
+        if df.empty:
+            df = yf.download(sym, period="6y", interval="1d", progress=False)
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = df.columns.get_level_values(0)
+            df = df.dropna(how="all").reset_index()
+        df.columns = [c.lower() for c in df.columns]
+        if "date" in df.columns:
+            df = df.rename(columns={"date": "timestamp"})
+        elif "datetime" in df.columns:
+            df = df.rename(columns={"datetime": "timestamp"})
+        return df[["timestamp", "open", "high", "low", "close", "volume"]]
+
+    assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 2200)) for c in TOP_CRYPTO] + \
+             [(f"{s} (US Stock 1D)", lambda sym=s: _get_batch_stock(sym)) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
             winner = evaluate_asset(fetcher(), label)
