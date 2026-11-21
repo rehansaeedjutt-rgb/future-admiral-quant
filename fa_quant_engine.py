@@ -208,7 +208,7 @@ if __name__ == "__main__":
     TOP_STOCKS = [
         "NVDA","AAPL","MSFT","GOOGL","AMZN","META","TSLA","AVGO","AMD","NFLX",
         "JPM","V","MA","UNH","LLY","XOM","COST","WMT","HD","PG",
-        "CRM","ORCL","ADBE","SPY","QQQ"
+        "CRM","ORCL","ADBE","SPY","QQQ", "BRK-B", "JNJ", "ABBV", "MRK", "PEP", "KO", "MCD", "DIS", "CSCO", "IBM", "TXN", "QCOM", "INTU", "NOW", "GS", "MS", "BLK", "CAT", "DE", "HON", "UNP", "LMT", "RTX", "LOW", "TJX", "NKE", "SBUX", "CVX", "COP", "NEE", "IWM", "DIA", "XLK", "XLF", "XLV", "XLE", "SMH"
     ]
     assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 1000)) for c in TOP_CRYPTO] + \
              [(f"{s} (US Stock 1D)", lambda sym=s: fetch_stock_data(sym, "3y", "1d")) for s in TOP_STOCKS]
