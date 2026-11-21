@@ -88,17 +88,26 @@ def run_backtest(df, signals, asset_name, strategy_name):
             entry_price, entry_date, capital = fill_px, bar_date, 0.0
         elif prev_sig == -1 and position > 0:
             fill_px = exec_open * (1 - slippage)
+            pos_usd = round(position * entry_price, 2)
             capital = (position * fill_px) * (1 - FEE_RATE)
-            net_pnl = ((fill_px - entry_price) / entry_price) * 100 - (FEE_RATE * 200)  # slippage already in fill prices
+            gross_pnl = ((fill_px - entry_price) / entry_price) * 100
+            net_pnl = gross_pnl - (FEE_RATE * 200)
             trades.append(net_pnl)
             AUDIT_TRADES.append({
+                "record_type": "BACKTEST_SIMULATION",
+                "data_source": "Binance Spot" if "Binance" in asset_name else "Yahoo Finance",
                 "asset": asset_name,
                 "strategy": strategy_name,
                 "entry_date": entry_date,
                 "entry_price": round(entry_price, 4),
                 "exit_date": bar_date,
                 "exit_price": round(fill_px, 4),
-                "net_pnl_pct": round(net_pnl, 2)
+                "position_size_usd": pos_usd,
+                "fee_roundtrip_pct": round(FEE_RATE * 200, 2),
+                "slippage_roundtrip_pct": round(slippage * 200, 2),
+                "gross_pnl_pct": round(gross_pnl, 2),
+                "net_pnl_pct": round(net_pnl, 2),
+                "equity_after_usd": round(capital, 2)
             })
             position = 0.0
 
