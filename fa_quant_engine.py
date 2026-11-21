@@ -116,17 +116,41 @@ def send_discord_report(stats, ai_verdict):
     if not DISCORD_WEBHOOK_URL or "YAHAN-PASTE-KARO" in DISCORD_WEBHOOK_URL:
         print(f"Discord Webhook not set in .env - skipping Discord for {stats['asset']}.")
         return
-    color = 0x00E5A0 if stats["net_return"] >= 0 else 0xFF3B69
+
+    is_stock = "US Stock" in stats.get("asset", "")
+    is_weekend = datetime.now(timezone.utc).weekday() >= 5
+    raw_status = stats.get("status", "FLAT / STANDBY")
+    tier = stats.get("tier", "TIER 1 (80%+ ELITE)" if float(stats.get("win_rate", 0)) >= 80.0 else "TIER 2 (75%-79%)")
+
+    if is_stock and is_weekend:
+        action_header = "MARKET CLOSED (WEEKEND) - DO NOT TRADE"
+        color = 0x6B7280
+        trade_plan = f"**Last Close ({stats.get('candle_date', 'N/A')}):** `${stats['price']:,.2f}`\n**Action:** US Stock Market is closed for the weekend. Wait for Monday open."
+    elif "BUY" in raw_status or "LONG" in raw_status:
+        action_header = "ACTIVE BUY / LONG SIGNAL (OVERSOLD DIP)"
+        color = 0x00E5A0
+        trade_plan = (
+            f"**Action:** TAKE TRADE (Next Bar Open)\n"
+            f"**Entry / Close:** `${stats['price']:,.2f}` | **Stop Loss:** `${stats.get('stop_loss', 0):,.2f}` | **Take Profit:** `${stats.get('take_profit', 0):,.2f}`"
+        )
+    elif "EXIT" in raw_status or "SELL" in raw_status:
+        action_header = "EXIT / TAKE PROFIT SIGNAL"
+        color = 0xF59E0B
+        trade_plan = f"**Last Close ({stats.get('candle_date', 'N/A')}):** `${stats['price']:,.2f}`\n**Action:** Close any open long position. Do NOT open a new buy."
+    else:
+        action_header = "NO TRADE - WAIT FOR OVERSOLD DIP"
+        color = 0x3B82F6
+        trade_plan = f"**Last Close ({stats.get('candle_date', 'N/A')}):** `${stats['price']:,.2f}`\n**Action:** No oversold setup today. Stay flat and preserve capital."
+
     payload = {
         "username": "Future Admiral AI-Quant Desk",
         "embeds": [{
-            "title": f"TOP QUANT STRATEGY - {stats['asset']}",
+            "title": f"[{tier}] {stats['asset']}",
             "description": (
-            f"**Winner:** `{stats['strategy']}`\n"
-            f"**Signal:** `{stats['status']}` | **Candle Date:** `{stats.get('candle_date', 'N/A')}`\n"
-            f"**Entry / Close:** `${stats['price']:,.2f}` | **Stop Loss:** `${stats.get('stop_loss', 0):,.2f}` | **Take Profit:** `${stats.get('take_profit', 0):,.2f}`\n\n"
-            f"**AI Analyst Verdict:**\n> {ai_verdict}"
-        ),
+                f"**Strategy:** `{stats['strategy']}`\n"
+                f"**Status:** `{action_header}`\n"
+                f"{trade_plan}"
+            ),
             "color": color,
             "fields": [
                 {"name": "Net Return", "value": f"**{stats['net_return']}%**", "inline": True},
@@ -183,7 +207,9 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error on {label}: {e}")
     # CLEAN FILTER & TOP-5 DISCORD DISPATCH
-    results = [r for r in results if r.get("total_trades", 0) >= 15 and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and r.get("max_drawdown", 100) <= 25.0 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
+    results = [r for r in results if r.get("total_trades", 0) >= 15 and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and r.get("max_drawdown", 100) <= 25.0 and r.get("win_rate", 0) >= 75.0 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
+    for r in results:
+        r["tier"] = "TIER 1 (80%+ ELITE)" if float(r.get("win_rate", 0)) >= 80.0 else "TIER 2 (75%-79%)"
     results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
     for top in results[:5]:
         try:
