@@ -89,7 +89,7 @@ def run_backtest(df, signals, asset_name, strategy_name):
         elif prev_sig == -1 and position > 0:
             fill_px = exec_open * (1 - slippage)
             capital = (position * fill_px) * (1 - FEE_RATE)
-            net_pnl = ((fill_px - entry_price) / entry_price) * 100 - (total_cost * 200)
+            net_pnl = ((fill_px - entry_price) / entry_price) * 100 - (FEE_RATE * 200)  # slippage already in fill prices
             trades.append(net_pnl)
             AUDIT_TRADES.append({
                 "asset": asset_name,
