@@ -112,60 +112,74 @@ def run_backtest(df, signals, asset_name, strategy_name):
         "max_risk_usd": round(INITIAL_CAPITAL * (MAX_RISK_PCT / 100.0), 2)
     }
 
+_WEEKEND_NOTICE_SENT = False
+
 def send_discord_report(stats, ai_verdict):
+    global _WEEKEND_NOTICE_SENT
     if not DISCORD_WEBHOOK_URL or "YAHAN-PASTE-KARO" in DISCORD_WEBHOOK_URL:
-        print(f"Discord Webhook not set in .env - skipping Discord for {stats['asset']}.")
         return
 
-    is_stock = "US Stock" in stats.get("asset", "")
+    asset = stats.get("asset", "")
+    is_stock = "US Stock" in asset
     is_weekend = datetime.now(timezone.utc).weekday() >= 5
     raw_status = stats.get("status", "FLAT / STANDBY")
-    tier = stats.get("tier", "TIER 1 (80%+ ELITE)" if float(stats.get("win_rate", 0)) >= 80.0 else "TIER 2 (75%-79%)")
 
+    # 1. Weekend US Stocks: send ONE clean notice only, no spam
     if is_stock and is_weekend:
-        action_header = "MARKET CLOSED (WEEKEND) - DO NOT TRADE"
-        color = 0x6B7280
-        trade_plan = f"**Last Close ({stats.get('candle_date', 'N/A')}):** `${stats['price']:,.2f}`\n**Action:** US Stock Market is closed for the weekend. Wait for Monday open."
-    elif "BUY" in raw_status or "LONG" in raw_status:
-        action_header = "ACTIVE BUY / LONG SIGNAL (OVERSOLD DIP)"
+        if _WEEKEND_NOTICE_SENT:
+            return
+        _WEEKEND_NOTICE_SENT = True
+        payload = {
+            "username": "Future Admiral Signals",
+            "embeds": [{
+                "title": "US Stock Market Closed (Weekend)",
+                "description": "US Stock Market is closed today. No US stock trades will be issued until Monday open. Crypto signals remain active 24/7.",
+                "color": 0x6B7280
+            }]
+        }
+        try:
+            requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10)
+        except Exception as e:
+            print(f"Discord error: {e}")
+        return
+
+    # 2. Only send live actionable BUY or EXIT signals to customers
+    if "BUY" in raw_status or "LONG" in raw_status:
+        title = f"BUY SIGNAL: {asset}"
         color = 0x00E5A0
-        trade_plan = (
-            f"**Action:** TAKE TRADE (Next Bar Open)\n"
-            f"**Entry / Close:** `${stats['price']:,.2f}` | **Stop Loss:** `${stats.get('stop_loss', 0):,.2f}` | **Take Profit:** `${stats.get('take_profit', 0):,.2f}`"
+        desc = (
+            f"**Action:** `BUY / LONG`\n"
+            f"**Entry Price:** `${stats['price']:,.2f}`\n"
+            f"**Stop Loss:** `${stats.get('stop_loss', 0):,.2f}`\n"
+            f"**Take Profit:** `${stats.get('take_profit', 0):,.2f}`\n"
+            f"**Candle Date:** `{stats.get('candle_date', 'N/A')}`"
         )
     elif "EXIT" in raw_status or "SELL" in raw_status:
-        action_header = "EXIT / TAKE PROFIT SIGNAL"
+        title = f"EXIT / TAKE PROFIT: {asset}"
         color = 0xF59E0B
-        trade_plan = f"**Last Close ({stats.get('candle_date', 'N/A')}):** `${stats['price']:,.2f}`\n**Action:** Close any open long position. Do NOT open a new buy."
+        desc = (
+            f"**Action:** `CLOSE LONG POSITION`\n"
+            f"**Exit Price:** `${stats['price']:,.2f}`\n"
+            f"**Candle Date:** `{stats.get('candle_date', 'N/A')}`"
+        )
     else:
-        action_header = "NO TRADE - WAIT FOR OVERSOLD DIP"
-        color = 0x3B82F6
-        trade_plan = f"**Last Close ({stats.get('candle_date', 'N/A')}):** `${stats['price']:,.2f}`\n**Action:** No oversold setup today. Stay flat and preserve capital."
+        # No active trade setup -> do NOT spam customers
+        return
 
     payload = {
-        "username": "Future Admiral AI-Quant Desk",
+        "username": "Future Admiral Signals",
         "embeds": [{
-            "title": f"[{tier}] {stats['asset']}",
-            "description": (
-                f"**Strategy:** `{stats['strategy']}`\n"
-                f"**Status:** `{action_header}`\n"
-                f"{trade_plan}"
-            ),
+            "title": title,
+            "description": desc,
             "color": color,
-            "fields": [
-                {"name": "Net Return", "value": f"**{stats['net_return']}%**", "inline": True},
-                {"name": "Win Rate", "value": f"**{stats['win_rate']}%**", "inline": True},
-                {"name": "Profit Factor", "value": f"**{stats['profit_factor']}**", "inline": True},
-                {"name": "Max Drawdown", "value": f"**-{stats['max_drawdown']}%**", "inline": True},
-                {"name": "Trades", "value": f"**{stats['total_trades']}**", "inline": True},
-                {"name": "Max Risk/Trade", "value": f"**${stats['max_risk_usd']}**", "inline": True},
-            ],
-            "footer": {"text": "Future Admiral Institutional AI-Quant Engine v2.0"},
-            "timestamp": datetime.now(timezone.utc).isoformat()
+            "footer": {"text": "Future Admiral Live Signals"}
         }]
     }
-    res = requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=15)
-    print("Discord sent!" if res.status_code in [200, 204] else f"Discord Error: {res.status_code}")
+    try:
+        requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=10)
+    except Exception as e:
+        print(f"Discord error: {e}")
+
 
 def evaluate_asset(df, asset_name):
     df = add_indicators(df)
