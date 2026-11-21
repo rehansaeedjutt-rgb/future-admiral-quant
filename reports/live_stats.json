@@ -11,10 +11,10 @@
       "profit_factor": 55.93,
       "max_drawdown": 17.68,
       "net_return": 211.51,
-      "final_equity": 31150.85,
+      "final_equity": 31150.84,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:32:02.210371+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 55.93 with -17.68% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:23.061643+00:00"
     },
     {
       "asset": "COST (US Stock 1D)",
@@ -26,10 +26,25 @@
       "profit_factor": 4.13,
       "max_drawdown": 7.94,
       "net_return": 33.74,
-      "final_equity": 13373.9,
+      "final_equity": 13373.89,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:35:32.831079+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.13 with -7.94% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:55.036130+00:00"
+    },
+    {
+      "asset": "AAVE/USDT (Binance 1D)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 99.28,
+      "status": "FLAT / BEARISH",
+      "total_trades": 26,
+      "win_rate": 88.46,
+      "profit_factor": 10.37,
+      "max_drawdown": 24.93,
+      "net_return": 731.5,
+      "final_equity": 83149.74,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 10.37 with -24.93% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:56:35.417706+00:00"
     },
     {
       "asset": "NFLX (US Stock 1D)",
@@ -43,23 +58,8 @@
       "net_return": 68.87,
       "final_equity": 16886.52,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:33:51.423729+00:00"
-    },
-    {
-      "asset": "AAVE/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 95.87,
-      "status": "FLAT / BEARISH",
-      "total_trades": 28,
-      "win_rate": 85.71,
-      "profit_factor": 14.56,
-      "max_drawdown": 18.8,
-      "net_return": 1014.75,
-      "final_equity": 111475.29,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice. However, I can help you write a 2-sentence institutional verdict for AAVE/USDT (Binance 1D) based on the provided stats.\n\n\"Institutional Verdict: Sell AAVE/USDT at $95.87 due to the Connors RSI(2) Extreme signal indicating a bearish trend. The high profit factor and low drawdown suggest a potentially lucrative short-term trading opportunity, but caution is advised due to the high risk involved.\"",
-      "updated_at": "2026-11-20T21:27:53.296324+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 67.17 with -5.55% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:40.798216+00:00"
     },
     {
       "asset": "MA (US Stock 1D)",
@@ -71,25 +71,10 @@
       "profit_factor": 7.3,
       "max_drawdown": 8.39,
       "net_return": 61.06,
-      "final_equity": 16106.0,
+      "final_equity": 16105.98,
       "max_risk_usd": 100.0,
-      "ai_verdict": "Based on Connors RSI(2) Extreme (<5), I strongly recommend a FLAT/BEARISH institutional verdict for MA (US Stock 1D) at $625.59, as the extreme oversold condition suggests a high probability of a reversal in the near term. Given the historical performance metrics, which include a net return of 61.06%, a win rate of 85.71%, and a profit factor of 7.3, I believe this is a compelling entry point for a risk-focused institutional investor.",
-      "updated_at": "2026-11-20T21:34:35.463443+00:00"
-    },
-    {
-      "asset": "BTC/USDT (Binance 1D)",
-      "strategy": "3-Bar Panic Pullback (Quick Exit)",
-      "price": 58299.74,
-      "status": "FLAT / BEARISH",
-      "total_trades": 18,
-      "win_rate": 83.33,
-      "profit_factor": 9.28,
-      "max_drawdown": 17.34,
-      "net_return": 89.55,
-      "final_equity": 18955.03,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:19:06.424355+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 7.3 with -8.39% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:46.843681+00:00"
     },
     {
       "asset": "GOOGL (US Stock 1D)",
@@ -101,10 +86,10 @@
       "profit_factor": 4.17,
       "max_drawdown": 9.48,
       "net_return": 56.58,
-      "final_equity": 15657.84,
+      "final_equity": 15657.85,
       "max_risk_usd": 100.0,
-      "ai_verdict": "Based on the Connors RSI(2) Extreme (<5) indicator, our institutional verdict for GOOGL (US Stock 1D) is to SELL immediately due to the extreme oversold condition, which suggests a high probability of a reversal in the bearish trend. The current price of $265.29 is a strong sell signal, and we recommend taking a risk-focused approach to limit potential losses while waiting for a potential bounce.",
-      "updated_at": "2026-11-20T21:32:47.419403+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.17 with -9.48% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:29.080547+00:00"
     },
     {
       "asset": "AAPL (US Stock 1D)",
@@ -118,8 +103,8 @@
       "net_return": 68.5,
       "final_equity": 16849.65,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm not able to provide financial advice or institutional verdicts. However, I can help you understand the given information.\n\nThe provided information is based on Connors RSI(2) Extreme (<5), which is a technical analysis indicator. Here's a breakdown of the given stats:\n\n- Net Return: 68.5% - This indicates the overall profit made on the investment.\n- Win Rate: 77.78% - This shows the percentage of successful trades.\n- Profit Factor: 7.92 - This measures the average gain per",
-      "updated_at": "2026-11-20T21:32:22.381842+00:00"
+      "ai_verdict": "Regime: LONG / BULLISH | Edge: PF 7.92 with -8.4% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T11:57:25.131316+00:00"
     },
     {
       "asset": "QQQ (US Stock 1D)",
@@ -133,8 +118,23 @@
       "net_return": 95.25,
       "final_equity": 19524.84,
       "max_risk_usd": 100.0,
-      "ai_verdict": "Based on the Connors RSI(2) Extreme (<5) indicator, we are issuing a BEARISH verdict for QQQ (US Stock 1D) at $608.45, as the extreme oversold condition signals a potential reversal in the trend. We recommend a cautious approach, with a potential target price of $550-$550, and a maximum position size of 20% of the portfolio, to mitigate potential losses.",
-      "updated_at": "2026-11-20T21:37:05.673869+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 6.39 with -7.58% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:58:11.040620+00:00"
+    },
+    {
+      "asset": "BCH/USDT (Binance 1D)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 192.0,
+      "status": "FLAT / BEARISH",
+      "total_trades": 22,
+      "win_rate": 77.27,
+      "profit_factor": 2.5,
+      "max_drawdown": 39.22,
+      "net_return": 80.16,
+      "final_equity": 18016.03,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 2.5 with -39.22% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:55:50.678156+00:00"
     },
     {
       "asset": "MKR/USDT (Binance 1D)",
@@ -161,10 +161,25 @@
       "profit_factor": 10.98,
       "max_drawdown": 7.87,
       "net_return": 132.37,
-      "final_equity": 23237.41,
+      "final_equity": 23237.4,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:33:38.426815+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 10.98 with -7.87% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:36.934638+00:00"
+    },
+    {
+      "asset": "LTC/USDT (Binance 1D)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 39.08,
+      "status": "FLAT / BEARISH",
+      "total_trades": 16,
+      "win_rate": 75.0,
+      "profit_factor": 7.9,
+      "max_drawdown": 34.48,
+      "net_return": 82.15,
+      "final_equity": 18214.62,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 7.9 with -34.48% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:55:48.071657+00:00"
     },
     {
       "asset": "WMT (US Stock 1D)",
@@ -175,11 +190,26 @@
       "win_rate": 75.0,
       "profit_factor": 6.63,
       "max_drawdown": 8.44,
-      "net_return": 177.12,
-      "final_equity": 27711.95,
+      "net_return": 177.17,
+      "final_equity": 27717.39,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:35:39.271022+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 6.63 with -8.44% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:56.983311+00:00"
+    },
+    {
+      "asset": "BNB/USDT (Binance 1D)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 529.62,
+      "status": "FLAT / BEARISH",
+      "total_trades": 27,
+      "win_rate": 74.07,
+      "profit_factor": 1.87,
+      "max_drawdown": 45.47,
+      "net_return": 50.42,
+      "final_equity": 15042.36,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 1.87 with -45.47% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:55:23.236489+00:00"
     },
     {
       "asset": "TRX/USDT (Binance 1D)",
@@ -188,10 +218,10 @@
       "status": "FLAT / BEARISH",
       "total_trades": 37,
       "win_rate": 72.97,
-      "profit_factor": 14.75,
-      "max_drawdown": 7.28,
-      "net_return": 394.83,
-      "final_equity": 49483.45,
+      "profit_factor": 14.7,
+      "max_drawdown": 7.21,
+      "net_return": 391.28,
+      "final_equity": 49127.91,
       "max_risk_usd": 100.0,
       "ai_verdict": "I cannot provide financial advice. However, I can help you understand the technical indicators used in the verdict. Would that help?",
       "updated_at": "2026-11-20T21:22:00.373968+00:00"
@@ -206,10 +236,10 @@
       "profit_factor": 4.24,
       "max_drawdown": 5.07,
       "net_return": 73.29,
-      "final_equity": 17329.19,
+      "final_equity": 17329.2,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:36:48.491676+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.24 with -5.07% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:58:09.140756+00:00"
     },
     {
       "asset": "JPM (US Stock 1D)",
@@ -221,10 +251,10 @@
       "profit_factor": 2.09,
       "max_drawdown": 16.2,
       "net_return": 42.9,
-      "final_equity": 14289.68,
+      "final_equity": 14289.7,
       "max_risk_usd": 100.0,
-      "ai_verdict": "Based on Connors RSI(2) Extreme (<5), I am issuing a FLAT/BEARISH institutional verdict for JPM, recommending a cautious approach due to the extreme oversold condition, which may be a contrarian buy signal. However, given the current market environment, I advise exercising extreme caution and considering a wait-and-see approach, rather than initiating a new position at current levels, to avoid potential further losses.",
-      "updated_at": "2026-11-20T21:34:08.794239+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 2.09 with -16.2% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T11:57:42.921498+00:00"
     },
     {
       "asset": "V (US Stock 1D)",
@@ -236,10 +266,10 @@
       "profit_factor": 4.12,
       "max_drawdown": 8.98,
       "net_return": 52.83,
-      "final_equity": 15283.36,
+      "final_equity": 15283.17,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:34:15.117706+00:00"
+      "ai_verdict": "Regime: LONG / BULLISH | Edge: PF 4.12 with -8.98% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
+      "updated_at": "2026-11-21T11:57:44.988744+00:00"
     }
   ]
 }
