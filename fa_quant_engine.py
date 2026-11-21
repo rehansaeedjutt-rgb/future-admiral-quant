@@ -148,6 +148,63 @@ import json, os
 
 _SENT_FILE = "reports/sent_signals.json"
 
+_FORWARD_CSV = "reports/live_forward_trades.csv"
+_FORWARD_COLS = [
+    "trade_id", "asset", "strategy", "status", "entry_date", "entry_price",
+    "stop_loss", "take_profit", "exit_date", "exit_price", "net_pnl_pct", "result"
+]
+
+def _record_forward_trade(stats, candle_date):
+    import csv
+    os.makedirs("reports", exist_ok=True)
+    rows = []
+    if os.path.exists(_FORWARD_CSV):
+        with open(_FORWARD_CSV, "r", encoding="utf-8", newline="") as f:
+            rows = list(csv.DictReader(f))
+
+    asset = stats.get("asset", "")
+    action = stats.get("status", "")
+    price = float(stats.get("price", 0))
+    changed = False
+
+    if action == "BUY / LONG":
+        already_open = any(r["asset"] == asset and r["status"] == "OPEN" for r in rows)
+        if not already_open:
+            rows.append({
+                "trade_id": f"FA-{len(rows)+1:04d}",
+                "asset": asset,
+                "strategy": stats.get("strategy", ""),
+                "status": "OPEN",
+                "entry_date": candle_date,
+                "entry_price": round(price, 4),
+                "stop_loss": round(float(stats.get("stop_loss", 0)), 4),
+                "take_profit": round(float(stats.get("take_profit", 0)), 4),
+                "exit_date": "",
+                "exit_price": "",
+                "net_pnl_pct": "",
+                "result": "OPEN"
+            })
+            changed = True
+    elif action == "EXIT / SELL":
+        for r in reversed(rows):
+            if r["asset"] == asset and r["status"] == "OPEN":
+                entry_px = float(r["entry_price"])
+                net_pnl = round(((price - entry_px) / entry_px) * 100 - 0.30, 2) if entry_px > 0 else 0.0
+                r["status"] = "CLOSED"
+                r["exit_date"] = candle_date
+                r["exit_price"] = round(price, 4)
+                r["net_pnl_pct"] = net_pnl
+                r["result"] = "WIN" if net_pnl > 0 else "LOSS"
+                changed = True
+                break
+
+    if changed or not os.path.exists(_FORWARD_CSV):
+        with open(_FORWARD_CSV, "w", encoding="utf-8", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=_FORWARD_COLS)
+            w.writeheader()
+            w.writerows(rows)
+
+
 def _load_sent():
     if os.path.exists(_SENT_FILE):
         try:
@@ -198,6 +255,7 @@ def send_discord_report(stats, ai_verdict):
     if "BUY" in raw_status or "LONG" in raw_status:
         sig_type = "BUY"
         title = f"BUY SIGNAL: {asset}"
+        _record_forward_trade(stats, candle_date)
         color = 0x00E5A0
         desc = (
             f"**Action:** `BUY / LONG`\n"
@@ -209,6 +267,7 @@ def send_discord_report(stats, ai_verdict):
     elif "EXIT" in raw_status or "SELL" in raw_status:
         sig_type = "EXIT"
         title = f"EXIT / TAKE PROFIT: {asset}"
+        _record_forward_trade(stats, candle_date)
         color = 0xF59E0B
         desc = (
             f"**Action:** `CLOSE LONG POSITION`\n"
