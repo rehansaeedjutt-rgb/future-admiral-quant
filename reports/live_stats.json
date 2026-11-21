@@ -11,10 +11,10 @@
       "profit_factor": 55.93,
       "max_drawdown": 17.68,
       "net_return": 211.51,
-      "final_equity": 31150.84,
+      "final_equity": 31150.82,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 55.93 with -17.68% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:23.061643+00:00"
+      "updated_at": "2026-11-21T12:12:35.554106+00:00"
     },
     {
       "asset": "COST (US Stock 1D)",
@@ -29,12 +29,12 @@
       "final_equity": 13373.89,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.13 with -7.94% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:55.036130+00:00"
+      "updated_at": "2026-11-21T12:13:03.596766+00:00"
     },
     {
       "asset": "AAVE/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 99.28,
+      "price": 99.67,
       "status": "FLAT / BEARISH",
       "total_trades": 26,
       "win_rate": 88.46,
@@ -44,7 +44,7 @@
       "final_equity": 83149.74,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 10.37 with -24.93% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:56:35.417706+00:00"
+      "updated_at": "2026-11-21T12:11:48.723691+00:00"
     },
     {
       "asset": "NFLX (US Stock 1D)",
@@ -59,7 +59,7 @@
       "final_equity": 16886.52,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 67.17 with -5.55% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:40.798216+00:00"
+      "updated_at": "2026-11-21T12:12:51.434276+00:00"
     },
     {
       "asset": "MA (US Stock 1D)",
@@ -71,10 +71,10 @@
       "profit_factor": 7.3,
       "max_drawdown": 8.39,
       "net_return": 61.06,
-      "final_equity": 16105.98,
+      "final_equity": 16105.99,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 7.3 with -8.39% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:46.843681+00:00"
+      "updated_at": "2026-11-21T12:12:56.681425+00:00"
     },
     {
       "asset": "GOOGL (US Stock 1D)",
@@ -89,7 +89,22 @@
       "final_equity": 15657.85,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.17 with -9.48% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:29.080547+00:00"
+      "updated_at": "2026-11-21T12:12:40.739716+00:00"
+    },
+    {
+      "asset": "BTC/USDT (Binance 1D)",
+      "strategy": "3-Bar Panic Pullback (Quick Exit)",
+      "price": 58170.0,
+      "status": "FLAT / BEARISH",
+      "total_trades": 20,
+      "win_rate": 80.0,
+      "profit_factor": 6.38,
+      "max_drawdown": 17.34,
+      "net_return": 86.55,
+      "final_equity": 18654.54,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 6.38 with -17.34% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T12:10:30.391884+00:00"
     },
     {
       "asset": "AAPL (US Stock 1D)",
@@ -101,10 +116,10 @@
       "profit_factor": 7.92,
       "max_drawdown": 8.4,
       "net_return": 68.5,
-      "final_equity": 16849.65,
+      "final_equity": 16849.66,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: LONG / BULLISH | Edge: PF 7.92 with -8.4% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T11:57:25.131316+00:00"
+      "updated_at": "2026-11-21T12:12:37.208542+00:00"
     },
     {
       "asset": "QQQ (US Stock 1D)",
@@ -116,25 +131,10 @@
       "profit_factor": 6.39,
       "max_drawdown": 7.58,
       "net_return": 95.25,
-      "final_equity": 19524.84,
+      "final_equity": 19524.86,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 6.39 with -7.58% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:58:11.040620+00:00"
-    },
-    {
-      "asset": "BCH/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 192.0,
-      "status": "FLAT / BEARISH",
-      "total_trades": 22,
-      "win_rate": 77.27,
-      "profit_factor": 2.5,
-      "max_drawdown": 39.22,
-      "net_return": 80.16,
-      "final_equity": 18016.03,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 2.5 with -39.22% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:55:50.678156+00:00"
+      "updated_at": "2026-11-21T12:13:17.569620+00:00"
     },
     {
       "asset": "MKR/USDT (Binance 1D)",
@@ -148,8 +148,8 @@
       "net_return": 325.52,
       "final_equity": 42552.11,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I'm unable to provide financial advice.",
-      "updated_at": "2026-11-20T21:28:00.650999+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.88 with -19.5% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T12:11:51.151508+00:00"
     },
     {
       "asset": "AVGO (US Stock 1D)",
@@ -164,22 +164,7 @@
       "final_equity": 23237.4,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 10.98 with -7.87% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:36.934638+00:00"
-    },
-    {
-      "asset": "LTC/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 39.08,
-      "status": "FLAT / BEARISH",
-      "total_trades": 16,
-      "win_rate": 75.0,
-      "profit_factor": 7.9,
-      "max_drawdown": 34.48,
-      "net_return": 82.15,
-      "final_equity": 18214.62,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 7.9 with -34.48% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:55:48.071657+00:00"
+      "updated_at": "2026-11-21T12:12:47.895406+00:00"
     },
     {
       "asset": "WMT (US Stock 1D)",
@@ -191,25 +176,10 @@
       "profit_factor": 6.63,
       "max_drawdown": 8.44,
       "net_return": 177.17,
-      "final_equity": 27717.39,
+      "final_equity": 27717.38,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 6.63 with -8.44% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:56.983311+00:00"
-    },
-    {
-      "asset": "BNB/USDT (Binance 1D)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 529.62,
-      "status": "FLAT / BEARISH",
-      "total_trades": 27,
-      "win_rate": 74.07,
-      "profit_factor": 1.87,
-      "max_drawdown": 45.47,
-      "net_return": 50.42,
-      "final_equity": 15042.36,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 1.87 with -45.47% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:55:23.236489+00:00"
+      "updated_at": "2026-11-21T12:13:05.194091+00:00"
     },
     {
       "asset": "TRX/USDT (Binance 1D)",
@@ -223,8 +193,23 @@
       "net_return": 391.28,
       "final_equity": 49127.91,
       "max_risk_usd": 100.0,
-      "ai_verdict": "I cannot provide financial advice. However, I can help you understand the technical indicators used in the verdict. Would that help?",
-      "updated_at": "2026-11-20T21:22:00.373968+00:00"
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 14.7 with -7.21% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T12:10:53.007885+00:00"
+    },
+    {
+      "asset": "XOM (US Stock 1D)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 159.99,
+      "status": "FLAT / BEARISH",
+      "total_trades": 21,
+      "win_rate": 71.43,
+      "profit_factor": 4.02,
+      "max_drawdown": 9.79,
+      "net_return": 41.56,
+      "final_equity": 14155.95,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.02 with -9.79% max DD. Defensive capital preservation advised.",
+      "updated_at": "2026-11-21T12:13:01.870602+00:00"
     },
     {
       "asset": "SPY (US Stock 1D)",
@@ -236,10 +221,10 @@
       "profit_factor": 4.24,
       "max_drawdown": 5.07,
       "net_return": 73.29,
-      "final_equity": 17329.2,
+      "final_equity": 17329.19,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 4.24 with -5.07% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:58:09.140756+00:00"
+      "updated_at": "2026-11-21T12:13:15.730317+00:00"
     },
     {
       "asset": "JPM (US Stock 1D)",
@@ -251,10 +236,10 @@
       "profit_factor": 2.09,
       "max_drawdown": 16.2,
       "net_return": 42.9,
-      "final_equity": 14289.7,
+      "final_equity": 14289.69,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: FLAT / BEARISH | Edge: PF 2.09 with -16.2% max DD. Defensive capital preservation advised.",
-      "updated_at": "2026-11-21T11:57:42.921498+00:00"
+      "updated_at": "2026-11-21T12:12:53.341464+00:00"
     },
     {
       "asset": "V (US Stock 1D)",
@@ -269,7 +254,7 @@
       "final_equity": 15283.17,
       "max_risk_usd": 100.0,
       "ai_verdict": "Regime: LONG / BULLISH | Edge: PF 4.12 with -8.98% max DD. Momentum alignment confirmed; enforce 1% risk cap.",
-      "updated_at": "2026-11-21T11:57:44.988744+00:00"
+      "updated_at": "2026-11-21T12:12:54.933547+00:00"
     }
   ]
 }
