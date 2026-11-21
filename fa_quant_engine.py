@@ -68,6 +68,10 @@ def fetch_stock_data(ticker="NVDA", period="6mo", interval="1h"):
     return df[["timestamp","open","high","low","close","volume"]].dropna()
 
 def run_backtest(df, signals, asset_name, strategy_name):
+    if "4H" in asset_name and len(df) >= 1200:
+        signals = signals.copy()
+        ema_macro = df["close"].ewm(span=1200, adjust=False).mean()
+        signals[(signals == 1) & (df["close"] <= ema_macro)] = 0
     capital, position, entry_price, entry_date, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, None, [], []
     slippage = 0.0005  # 0.05% per-side slippage on top of FEE_RATE (0.10%)
     total_cost = FEE_RATE + slippage
@@ -283,7 +287,7 @@ if __name__ == "__main__":
 
     TOP_CRYPTO_4H = TOP_CRYPTO[:10]
     assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 2200)) for c in TOP_CRYPTO] + \
-             [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 2200)) for c in TOP_CRYPTO_4H] + \
+             [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 3000)) for c in TOP_CRYPTO_4H] + \
              [(f"{s} (US Stock 1D)", lambda sym=s: _get_batch_stock(sym)) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
