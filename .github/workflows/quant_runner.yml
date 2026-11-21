@@ -37,5 +37,5 @@ jobs:
         run: |
           git config --global user.name "Future Admiral Bot"
           git config --global user.email "bot@futureadmiral.quant"
-          git add reports/live_stats.json
+          git add reports/live_stats.json reports/audit_trade_log.csv
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update live quant stats" && git push)
