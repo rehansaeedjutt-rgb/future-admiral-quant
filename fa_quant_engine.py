@@ -281,7 +281,9 @@ if __name__ == "__main__":
             df = df.rename(columns={"datetime": "timestamp"})
         return df[["timestamp", "open", "high", "low", "close", "volume"]]
 
+    TOP_CRYPTO_4H = TOP_CRYPTO[:10]
     assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 2200)) for c in TOP_CRYPTO] + \
+             [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 2200)) for c in TOP_CRYPTO_4H] + \
              [(f"{s} (US Stock 1D)", lambda sym=s: _get_batch_stock(sym)) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
