@@ -3,95 +3,291 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Future Admiral | Institutional AI-Quant Desk</title>
+  <title>Future Admiral AI-Quant | Institutional Backtest Leaderboard</title>
   <style>
-    :root { --bg: #070b14; --card: #0f172a; --border: #1e293b; --accent: #00e5a0; --danger: #ff3b69; --text: #f8fafc; --muted: #94a3b8; }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 32px 20px; line-height: 1.5; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; }
-    .brand h1 { font-size: 1.8rem; letter-spacing: 0.5px; }
-    .brand span { color: var(--accent); }
+    :root {
+      --bg: #0b0f19;
+      --card: #111827;
+      --border: #1f2937;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 24px 16px 48px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+    .brand h1 { font-size: 1.65rem; font-weight: 700; letter-spacing: -0.02em; }
     .brand p { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
-    .badge { background: rgba(0, 229, 160, 0.12); color: var(--accent); border: 1px solid rgba(0, 229, 160, 0.3); padding: 6px 14px; border-radius: 999px; font-size: 0.85rem; font-weight: 600; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; transition: transform 0.2s; }
-    .card:hover { transform: translateY(-3px); border-color: #334155; }
-    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .asset { font-size: 1.15rem; font-weight: 700; }
-    .price { font-size: 1rem; color: var(--muted); font-weight: 600; }
-    .strategy { font-size: 0.85rem; color: var(--accent); background: rgba(0, 229, 160, 0.08); display: inline-block; padding: 4px 10px; border-radius: 6px; margin-bottom: 16px; }
-    .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
-    .metric { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
-    .metric-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; }
-    .metric-val { font-size: 1.1rem; font-weight: 700; margin-top: 2px; }
-    .pos { color: var(--accent); }
-    .neg { color: var(--danger); }
-    .verdict { font-size: 0.85rem; color: #cbd5e1; background: rgba(15, 23, 42, 0.8); border-left: 3px solid var(--accent); padding: 10px 12px; border-radius: 4px; margin-bottom: 12px; }
-    .footer-meta { font-size: 0.75rem; color: var(--muted); display: flex; justify-content: space-between; }
-    .cta { margin-top: 40px; text-align: center; padding: 28px; background: linear-gradient(135deg, #0f172a, #111827); border: 1px solid var(--border); border-radius: 14px; }
-    .cta h2 { margin-bottom: 8px; }
-    .cta p { color: var(--muted); margin-bottom: 16px; }
-    .btn { display: inline-block; background: var(--accent); color: #04100b; font-weight: 700; padding: 12px 24px; border-radius: 8px; text-decoration: none; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-size: 1.5rem; font-weight: 700; margin-top: 6px; color: var(--text); }
+    .stat-value.green { color: var(--green); }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab-btn {
+      background: var(--card);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover { color: var(--text); border-color: #374151; }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #0b0f19;
+      border-color: var(--accent);
+    }
+    .search-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      min-width: 240px;
+      outline: none;
+    }
+    .search-box:focus { border-color: var(--accent); }
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 13px 16px; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+    th {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255, 255, 255, 0.025); }
+    .asset-name { font-weight: 700; color: var(--text); }
+    .strategy-tag { font-size: 0.82rem; color: var(--muted); }
+    .pos { color: var(--green); font-weight: 600; }
+    .dd { color: var(--amber); font-weight: 600; }
+    .pill {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .pill-long { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+    .pill-flat { background: rgba(156, 163, 175, 0.15); color: var(--muted); }
+    .empty { text-align: center; padding: 36px; color: var(--muted); }
+    .disclaimer {
+      margin-top: 32px;
+      background: rgba(245, 158, 11, 0.06);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 12px;
+      padding: 18px 20px;
+      font-size: 0.8rem;
+      color: #d1d5db;
+    }
+    .disclaimer strong { color: var(--amber); display: block; margin-bottom: 6px; font-size: 0.84rem; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <div class="brand">
-        <h1>⚓ FUTURE <span>ADMIRAL</span></h1>
-        <p>Institutional AI-Quant Research & Algorithmic Signal Desk</p>
+        <h1>Future Admiral AI-Quant</h1>
+        <p>3-Year Daily (1D) Institutional Mean-Reversion Leaderboard &bull; Next-Bar Open Execution</p>
       </div>
-      <div class="badge" id="status-badge">● LIVE 24/7 ENGINE</div>
+      <div class="badges">
+        <span class="badge">Binomial p &lt; 5%</span>
+        <span class="badge">0.30% Fee + Slippage</span>
+        <span class="badge">Max DD &le; 25%</span>
+      </div>
     </header>
 
-    <div class="grid" id="cards-grid">
-      <p style="color:#94a3b8;">Loading live institutional quant data...</p>
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Verified Assets</div>
+        <div class="stat-value" id="stat-count">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Average Win Rate</div>
+        <div class="stat-value green" id="stat-wr">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Average Profit Factor</div>
+        <div class="stat-value" id="stat-pf">--</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Top Performer</div>
+        <div class="stat-value green" id="stat-top">--</div>
+      </div>
+    </section>
+
+    <div class="controls">
+      <div class="tabs">
+        <button class="tab-btn active" data-filter="all">All Verified</button>
+        <button class="tab-btn" data-filter="stock">US Stocks (1D)</button>
+        <button class="tab-btn" data-filter="crypto">Crypto (Binance 1D)</button>
+      </div>
+      <input type="text" id="search-input" class="search-box" placeholder="Search ticker or strategy..." />
     </div>
 
-    <div class="cta">
-      <h2>Get Real-Time Discord Alerts</h2>
-      <p>Automated ML-filtered signals for Crypto (Binance) & US Equities delivered every 4 hours.</p>
-      <a href="#" class="btn">Join Premium Discord Desk</a>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Strategy</th>
+            <th>Trades</th>
+            <th>Win Rate</th>
+            <th>Profit Factor</th>
+            <th>Net Return</th>
+            <th>Max DD</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr><td colspan="8" class="empty">Loading verified institutional data...</td></tr>
+        </tbody>
+      </table>
     </div>
+
+    <footer class="disclaimer">
+      <strong>HYPOTHETICAL / SIMULATED PERFORMANCE DISCLAIMER (CFTC RULE 4.41 &amp; SEC MARKETING RULE)</strong>
+      All metrics displayed on this dashboard represent hypothetical, backtested historical simulations over a 3-year Daily (1D) window using public Yahoo Finance and Binance market data, incorporating strict next-bar open execution and 0.30% round-trip estimated fees and slippage. Hypothetical or simulated performance results have inherent limitations and do not represent actual live trading. No representation is being made that any account will or is likely to achieve profits or losses similar to those shown. Past performance is not indicative of future results. This dashboard is for informational and research purposes only and does not constitute financial, investment, or trading advice.
+    </footer>
   </div>
 
   <script>
-    async function loadStats() {
-      try {
-        const res = await fetch('reports/live_stats.json?t=' + Date.now());
-        const data = await res.json();
-        const grid = document.getElementById('cards-grid');
-        grid.innerHTML = '';
+    let allRows = [];
+    let activeFilter = "all";
 
-        data.results.forEach(item => {
-          const retClass = item.net_return >= 0 ? 'pos' : 'neg';
-          const updated = new Date(item.updated_at).toLocaleString();
-          grid.innerHTML += `
-            <div class="card">
-              <div class="card-top">
-                <div class="asset">${item.asset}</div>
-                <div class="price">$${item.price.toLocaleString()}</div>
-              </div>
-              <div class="strategy">${item.strategy}</div>
-              <div class="metrics">
-                <div class="metric"><div class="metric-label">Net Return</div><div class="metric-val ${retClass}">${item.net_return}%</div></div>
-                <div class="metric"><div class="metric-label">Win Rate</div><div class="metric-val">${item.win_rate}%</div></div>
-                <div class="metric"><div class="metric-label">Profit Factor</div><div class="metric-val">${item.profit_factor}</div></div>
-                <div class="metric"><div class="metric-label">Max Drawdown</div><div class="metric-val neg">-${item.max_drawdown}%</div></div>
-              </div>
-              <div class="verdict"><strong>AI Verdict:</strong> ${item.ai_verdict}</div>
-              <div class="footer-meta">
-                <span>Signal: <strong>${item.status}</strong></span>
-                <span>${updated}</span>
-              </div>
-            </div>`;
-        });
-      } catch (e) {
-        document.getElementById('cards-grid').innerHTML = '<p style="color:#ff3b69;">Unable to load live_stats.json yet.</p>';
-      }
+    function isCrypto(asset) {
+      return /USDT|Binance/i.test(asset || "");
     }
-    loadStats();
+
+    function updateStats(rows) {
+      document.getElementById("stat-count").textContent = rows.length;
+      if (!rows.length) {
+        document.getElementById("stat-wr").textContent = "--";
+        document.getElementById("stat-pf").textContent = "--";
+        document.getElementById("stat-top").textContent = "--";
+        return;
+      }
+      const avgWr = rows.reduce((s, r) => s + Number(r.win_rate || 0), 0) / rows.length;
+      const avgPf = rows.reduce((s, r) => s + Number(r.profit_factor || 0), 0) / rows.length;
+      const top = [...rows].sort((a, b) => Number(b.win_rate || 0) - Number(a.win_rate || 0))[0];
+      document.getElementById("stat-wr").textContent = avgWr.toFixed(1) + "%";
+      document.getElementById("stat-pf").textContent = avgPf.toFixed(2);
+      document.getElementById("stat-top").textContent = `${top.asset.split(" ")[0]} (${Number(top.win_rate).toFixed(1)}%)`;
+    }
+
+    function renderTable() {
+      const q = document.getElementById("search-input").value.trim().toLowerCase();
+      const filtered = allRows.filter(r => {
+        if (activeFilter === "crypto" && !isCrypto(r.asset)) return false;
+        if (activeFilter === "stock" && isCrypto(r.asset)) return false;
+        if (q && !(r.asset || "").toLowerCase().includes(q) && !(r.strategy || "").toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      updateStats(filtered);
+      const tbody = document.getElementById("table-body");
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty">No matching verified assets found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(r => {
+        const statusText = r.status || "FLAT / BEARISH";
+        const isLong = /LONG|BULLISH/i.test(statusText);
+        return `
+          <tr>
+            <td class="asset-name">${r.asset}</td>
+            <td class="strategy-tag">${r.strategy}</td>
+            <td>${r.total_trades}</td>
+            <td class="pos">${Number(r.win_rate).toFixed(2)}%</td>
+            <td>${Number(r.profit_factor).toFixed(2)}</td>
+            <td class="pos">+${Number(r.net_return).toFixed(2)}%</td>
+            <td class="dd">${Number(r.max_drawdown).toFixed(2)}%</td>
+            <td><span class="pill ${isLong ? "pill-long" : "pill-flat"}">${statusText}</span></td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeFilter = btn.dataset.filter;
+        renderTable();
+      });
+    });
+
+    document.getElementById("search-input").addEventListener("input", renderTable);
+
+    fetch("reports/live_stats.json?t=" + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        allRows = Array.isArray(data) ? data : (Object.values(data).find(v => Array.isArray(v)) || []);
+        renderTable();
+      })
+      .catch(() => {
+        document.getElementById("table-body").innerHTML = '<tr><td colspan="8" class="empty">Failed to load reports/live_stats.json.</td></tr>';
+      });
   </script>
 </body>
 </html>
