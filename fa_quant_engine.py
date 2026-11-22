@@ -269,15 +269,30 @@ def send_discord_report(stats, ai_verdict):
     candle_date = str(stats.get("candle_date", today_utc))
     if "BUY" in raw_status or "LONG" in raw_status:
         sig_type = "BUY"
-        title = f"BUY SIGNAL: {asset}"
+        ai_gate = run_dual_ai_committee(asset, stats.get("strategy", ""), {
+            "price": stats.get("price"),
+            "stop_loss": stats.get("stop_loss"),
+            "take_profit": stats.get("take_profit"),
+            "win_rate": stats.get("win_rate"),
+            "profit_factor": stats.get("profit_factor"),
+            "max_drawdown": stats.get("max_drawdown")
+        })
+        if not ai_gate.get("consensus_approved"):
+            print(f"?? AI VETO on {asset}: Tech={ai_gate['agent1_technical']} | Macro={ai_gate['agent2_fundamental']}")
+            return
+        title = f"BUY SIGNAL: {asset} (AI APPROVED)"
         _record_forward_trade(stats, candle_date)
         color = 0x00E5A0
+        t_reason = ai_gate["agent1_technical"].get("reason", "Approved")
+        m_reason = ai_gate["agent2_fundamental"].get("reason", "Low macro risk")
         desc = (
             f"**Action:** `BUY / LONG`\n"
             f"**Entry Price:** `${stats['price']:,.2f}`\n"
             f"**Stop Loss:** `${stats.get('stop_loss', 0):,.2f}`\n"
             f"**Take Profit:** `${stats.get('take_profit', 0):,.2f}`\n"
-            f"**Candle Date:** `{candle_date}`"
+            f"**Candle Date:** `{candle_date}`\n"
+            f"**Agent 1 (Technical AI):** `APPROVE` ? {t_reason}\n"
+            f"**Agent 2 (Macro/News AI):** `APPROVE` ? {m_reason}"
         )
     elif "EXIT" in raw_status or "SELL" in raw_status:
         sig_type = "EXIT"
