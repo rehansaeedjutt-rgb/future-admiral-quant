@@ -72,7 +72,7 @@ def run_backtest(df, signals, asset_name, strategy_name):
         signals = signals.copy()
         ema_macro = df["close"].ewm(span=1200, adjust=False).mean()
         signals[(signals == 1) & (df["close"] <= ema_macro)] = 0
-    capital, position, entry_price, entry_date, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, None, [], []
+    capital, position, entry_price, entry_date, signal_date, raw_entry_open, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, None, None, 0.0, [], []
     slippage = 0.0005  # 0.05% per-side slippage on top of FEE_RATE (0.10%)
     total_cost = FEE_RATE + slippage
 
@@ -85,6 +85,8 @@ def run_backtest(df, signals, asset_name, strategy_name):
         if prev_sig == 1 and position == 0:
             fill_px = exec_open * (1 + slippage)
             position = (capital * (1 - FEE_RATE)) / fill_px
+            signal_date = str(df["timestamp"].iloc[i - 1])[:10]
+            raw_entry_open = exec_open
             entry_price, entry_date, capital = fill_px, bar_date, 0.0
         elif prev_sig == -1 and position > 0:
             fill_px = exec_open * (1 - slippage)
@@ -98,14 +100,17 @@ def run_backtest(df, signals, asset_name, strategy_name):
                 "data_source": "Binance Spot" if "Binance" in asset_name else "Yahoo Finance",
                 "asset": asset_name,
                 "strategy": strategy_name,
+                "signal_date": signal_date,
                 "entry_date": entry_date,
-                "entry_price": round(entry_price, 4),
+                "raw_entry_open": round(raw_entry_open, 4),
+                "entry_price_slipped": round(entry_price, 4),
                 "exit_date": bar_date,
-                "exit_price": round(fill_px, 4),
+                "raw_exit_open": round(exec_open, 4),
+                "exit_price_slipped": round(fill_px, 4),
                 "position_size_usd": pos_usd,
                 "fee_roundtrip_pct": round(FEE_RATE * 200, 2),
                 "slippage_roundtrip_pct": round(slippage * 200, 2),
-                "gross_pnl_pct": round(gross_pnl, 2),
+                "gross_pnl_after_slippage_pct": round(gross_pnl, 2),
                 "net_pnl_pct": round(net_pnl, 2),
                 "equity_after_usd": round(capital, 2)
             })
