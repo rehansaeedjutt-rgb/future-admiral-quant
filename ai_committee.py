@@ -72,7 +72,7 @@ def run_dual_ai_committee(asset, strategy, metrics: dict):
 
     try:
         agent1 = call_ollama(tech_sys, tech_user)
-        macro_user = f"Asset: {asset}\nLatest Headlines:\n{news}\nAgent 1 View: {json.dumps(agent1)}"
+        macro_user = f"Asset: {asset}\nLatest News Headlines:\n{news}\nAnalyze ONLY these headlines for macro/crash risk. Do NOT mention technical metrics."
         agent2 = call_ollama(macro_sys, macro_user)
     except Exception as e:
         # Safe fallback if Ollama isn't running locally
