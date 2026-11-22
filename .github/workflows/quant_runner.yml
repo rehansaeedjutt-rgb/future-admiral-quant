@@ -30,7 +30,7 @@ jobs:
           curl -fsSL https://ollama.com/install.sh | sh
           ollama serve &
           sleep 5
-          ollama pull qwen2.5:1.5b
+          ollama pull qwen2.5:3b
 
       - name: Run Future Admiral AI-Quant Engine
         env:

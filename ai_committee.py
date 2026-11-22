@@ -1,7 +1,7 @@
 ﻿import os, json, requests, xml.etree.ElementTree as ET
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:1.5b")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5:3b")
 
 CRASH_KEYWORDS = [
     "sec sues", "exchange hack", "hacked", "bankrupt", "insolvent",
@@ -9,7 +9,6 @@ CRASH_KEYWORDS = [
 ]
 
 def fetch_live_macro_news(asset_symbol, limit=6):
-    """Fetches latest crypto + macro headlines from free Google News RSS."""
     query = f"{asset_symbol} crypto OR bitcoin OR federal reserve OR trump tariff"
     url = f"https://news.google.com/rss/search?q={requests.utils.quote(query)}&hl=en-US&gl=US&ceid=US:en"
     headlines = []
@@ -26,27 +25,52 @@ def fetch_live_macro_news(asset_symbol, limit=6):
     return "\n".join(headlines) if headlines else "No major breaking news fetched."
 
 def call_ollama(system_prompt, user_prompt):
-    """Calls local or GitHub-runner Ollama with strict JSON output."""
     payload = {
         "model": OLLAMA_MODEL,
         "system": system_prompt,
         "prompt": user_prompt,
         "format": "json",
         "stream": False,
-        "options": {"temperature": 0.1, "num_predict": 150}
+        "options": {"temperature": 0.0, "num_predict": 140}
     }
-    r = requests.post(OLLAMA_URL, json=payload, timeout=60)
+    r = requests.post(OLLAMA_URL, json=payload, timeout=90)
     r.raise_for_status()
     return json.loads(r.json()["response"])
 
 def run_dual_ai_committee(asset, strategy, metrics: dict):
     """
-    Agent 1 (Technical Quant AI) + Agent 2 (Fundamental/Macro AI) via Ollama.
-    Both MUST vote APPROVE for the trade to pass.
+    Fail-Closed Dual-AI Committee:
+    - Python pre-calculates all geometry/math facts (zero LLM arithmetic).
+    - Agent 1: Technical Quant Reviewer.
+    - Agent 2: Independent Macro/News Risk Officer (headlines-only).
+    - If Ollama fails or either agent vetoes -> VETO (Fail-Closed).
     """
-    news = fetch_live_macro_news(asset.split("/")[0])
+    price = float(metrics.get("price", 0) or 0)
+    sl = float(metrics.get("stop_loss", 0) or 0)
+    tp = float(metrics.get("take_profit", 0) or 0)
+    risk = max(price - sl, 1e-9)
+    reward = max(tp - price, 0.0)
+    rr_ratio = round(reward / risk, 2) if price > sl else 0.0
+    valid_geometry = (sl < price < tp)
 
-    # Hard safety check before LLM (instant veto on extreme crash headlines)
+    if not valid_geometry:
+        return {
+            "consensus_approved": False,
+            "agent1_technical": {"vote": "VETO", "confidence": 0, "reason": "Invalid SL/Price/TP geometry"},
+            "agent2_fundamental": {"vote": "SKIPPED", "risk_level": "HIGH", "reason": "Blocked by geometry check"}
+        }
+
+    verified_facts = {
+        "entry_price": price,
+        "stop_loss_below_entry": sl,
+        "take_profit_above_entry": tp,
+        "risk_reward_ratio": rr_ratio,
+        "historical_win_rate_pct": metrics.get("win_rate"),
+        "profit_factor": metrics.get("profit_factor"),
+        "max_drawdown_pct": metrics.get("max_drawdown")
+    }
+
+    news = fetch_live_macro_news(asset.split("/")[0])
     news_lower = news.lower()
     for kw in CRASH_KEYWORDS:
         if kw in news_lower:
@@ -58,28 +82,29 @@ def run_dual_ai_committee(asset, strategy, metrics: dict):
 
     tech_sys = (
         "You are Agent 1: Institutional Technical Quant Reviewer. "
-        "Review the BUY signal metrics. Reject if volatility is extreme or structure is weak. "
-        'Reply ONLY in JSON: {"vote": "APPROVE" or "VETO", "confidence": 0-100, "reason": "short 1-line"}'
+        "All numbers are pre-verified by Python. Do NOT recalculate math. "
+        "VETO if max_drawdown_pct > 25 or risk_reward_ratio < 1.2. Otherwise APPROVE. "
+        'Reply ONLY in JSON: {"vote": "APPROVE" or "VETO", "confidence": 0-100, "reason": "concise 1-sentence reason"}'
     )
-    tech_user = f"Asset: {asset}\nStrategy: {strategy}\nMetrics: {json.dumps(metrics)}"
+    tech_user = f"Asset: {asset}\nStrategy: {strategy}\nPre-Verified Facts: {json.dumps(verified_facts)}"
 
     macro_sys = (
         "You are Agent 2: Institutional Macro & Fundamental Risk Officer. "
-        "Check headlines for crash risks (Trump tariffs, Fed shocks, SEC lawsuits, hacks, war). "
-        "If an active crash catalyst exists, VETO. "
-        'Reply ONLY in JSON: {"vote": "APPROVE" or "VETO", "risk_level": "LOW|MEDIUM|HIGH", "reason": "short 1-line"}'
+        "Analyze ONLY the provided news headlines for acute crash risks (Trump tariff shocks, Fed emergency hikes, SEC lawsuits, hacks, war). "
+        "Do NOT mention technical metrics. If an acute crash catalyst exists, VETO; otherwise APPROVE. "
+        'Reply ONLY in JSON: {"vote": "APPROVE" or "VETO", "risk_level": "LOW|MEDIUM|HIGH", "reason": "concise 1-sentence news summary"}'
     )
+    macro_user = f"Asset: {asset}\nLatest News Headlines:\n{news}"
 
     try:
         agent1 = call_ollama(tech_sys, tech_user)
-        macro_user = f"Asset: {asset}\nLatest News Headlines:\n{news}\nAnalyze ONLY these headlines for macro/crash risk. Do NOT mention technical metrics."
         agent2 = call_ollama(macro_sys, macro_user)
     except Exception as e:
-        # Safe fallback if Ollama isn't running locally
+        # Strict Fail-Closed: never approve a trade if the AI risk gate is offline
         return {
-            "consensus_approved": True,
-            "agent1_technical": {"vote": "APPROVE", "confidence": 75, "reason": f"Math verified (Ollama offline: {str(e)[:40]})"},
-            "agent2_fundamental": {"vote": "APPROVE", "risk_level": "LOW", "reason": "No crash keywords in live RSS"}
+            "consensus_approved": False,
+            "agent1_technical": {"vote": "VETO", "confidence": 0, "reason": f"Fail-Closed: Ollama error ({str(e)[:45]})"},
+            "agent2_fundamental": {"vote": "VETO", "risk_level": "HIGH", "reason": "Fail-Closed: AI Risk Gate unavailable"}
         }
 
     consensus = (str(agent1.get("vote", "")).upper() == "APPROVE") and (str(agent2.get("vote", "")).upper() == "APPROVE")
@@ -88,8 +113,3 @@ def run_dual_ai_committee(asset, strategy, metrics: dict):
         "agent1_technical": agent1,
         "agent2_fundamental": agent2
     }
-
-if __name__ == "__main__":
-    print("Testing Dual-AI Committee (Ollama)...")
-    res = run_dual_ai_committee("BTC/USDT", "RSI2_Extreme_MR", {"rsi2": 3.2, "above_ema200": True, "atr_pct": 2.4})
-    print(json.dumps(res, indent=2))

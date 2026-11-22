@@ -391,14 +391,11 @@ if __name__ == "__main__":
     for r in results:
         r["tier"] = "TIER 1 (80%+ ELITE)" if float(r.get("win_rate", 0)) >= 80.0 else "TIER 2 (75%-79%)"
     results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
-    for top in results[:5]:
+    for item in results:
         try:
-            send_discord_report(top["asset"], top)
-        except Exception:
-            try:
-                send_discord_report(top, top.get("ai_verdict", ""))
-            except Exception:
-                pass
+            send_discord_report(item, item.get("ai_verdict", ""))
+        except Exception as e:
+            print(f"Discord dispatch error on {item.get('asset')}: {e}")
 
     os.makedirs("reports", exist_ok=True)
     with open("reports/live_stats.json", "w", encoding="utf-8") as f:
