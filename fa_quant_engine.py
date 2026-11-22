@@ -73,7 +73,7 @@ def run_backtest(df, signals, asset_name, strategy_name):
         signals = signals.copy()
         ema_macro = df["close"].ewm(span=1200, adjust=False).mean()
         signals[(signals == 1) & (df["close"] <= ema_macro)] = 0
-    capital, position, entry_price, entry_date, signal_date, raw_entry_open, trades, eq = INITIAL_CAPITAL, 0.0, 0.0, None, None, 0.0, [], []
+    capital, realized_capital, position, entry_price, entry_date, signal_date, raw_entry_open, trades, eq = INITIAL_CAPITAL, INITIAL_CAPITAL, 0.0, 0.0, None, None, 0.0, [], []
     slippage = 0.0005  # 0.05% per-side slippage on top of FEE_RATE (0.10%)
     total_cost = FEE_RATE + slippage
 
@@ -93,6 +93,7 @@ def run_backtest(df, signals, asset_name, strategy_name):
             fill_px = exec_open * (1 - slippage)
             pos_usd = round(position * entry_price, 2)
             capital = (position * fill_px) * (1 - FEE_RATE)
+            realized_capital = capital
             gross_pnl = ((fill_px - entry_price) / entry_price) * 100
             net_pnl = gross_pnl - (FEE_RATE * 200)
             trades.append(net_pnl)
@@ -119,7 +120,7 @@ def run_backtest(df, signals, asset_name, strategy_name):
 
         eq.append(capital if position == 0 else position * close_px)
 
-    final_eq = eq[-1] if eq else INITIAL_CAPITAL
+    final_eq = realized_capital
     net_ret = ((final_eq - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
     wins = [t for t in trades if t > 0]
     losses = [t for t in trades if t <= 0]
@@ -189,9 +190,9 @@ def _record_forward_trade(stats, candle_date):
                 "trade_id": f"FA-{len(rows)+1:04d}",
                 "asset": asset,
                 "strategy": stats.get("strategy", ""),
-                "status": "OPEN",
-                "entry_date": candle_date,
-                "entry_price": round(price, 4),
+                "status": "PENDING_NEXT_OPEN",
+                "entry_date": f"NEXT_OPEN_AFTER_{candle_date}",
+                "entry_price": "PENDING_NEXT_OPEN",
                 "stop_loss": round(float(stats.get("stop_loss", 0)), 4),
                 "take_profit": round(float(stats.get("take_profit", 0)), 4),
                 "exit_date": "",
@@ -330,15 +331,24 @@ def send_discord_report(stats, ai_verdict):
 
 def evaluate_asset(df, asset_name):
     df = add_indicators(df)
-    best_stats, best_score = None, -999999
+    # 1. Select best strategy STRICTLY on first 50% in-sample window (zero OOS selection bias)
+    is_cut = max(int(len(df) * 0.5), 250)
+    df_is = df.iloc[:is_cut].copy()
+    best_name, best_is_score = next(iter(STRATEGY_VAULT.keys())), -999999
+    audit_len_before = len(AUDIT_TRADES)
     for name, fn in STRATEGY_VAULT.items():
-        ml_sig = apply_ml_filter(df, fn(df))
-        stats = run_backtest(df, ml_sig, asset_name, name)
-        score = ((stats["win_rate"] * 0.6) + (stats["profit_factor"] * 12) + stats["net_return"] - (stats["max_drawdown"] * 1.2)) if (stats["total_trades"] >= 15 and stats["profit_factor"] >= 1.0) else -99999
-        if score > best_score:
-            best_score, best_stats = score, stats
-    verdict = get_ai_verdict(asset_name, best_stats["strategy"], best_stats)
-    best_stats["ai_verdict"] = verdict
+        is_stats = run_backtest(df_is, fn(df_is), asset_name, name)
+        score = ((is_stats["win_rate"] * 0.6) + (is_stats["profit_factor"] * 12) + is_stats["net_return"] - (is_stats["max_drawdown"] * 1.2)) if (is_stats["total_trades"] >= 5 and is_stats["profit_factor"] >= 1.0) else -99999
+        if score > best_is_score:
+            best_is_score, best_name = score, name
+    # Discard in-sample selection trades from AUDIT_TRADES
+    del AUDIT_TRADES[audit_len_before:]
+
+    # 2. Evaluate ONLY the locked strategy on strictly purged OOS data
+    locked_fn = STRATEGY_VAULT[best_name]
+    ml_sig = apply_ml_filter(df, locked_fn(df))
+    best_stats = run_backtest(df, ml_sig, asset_name, best_name)
+    best_stats["ai_verdict"] = "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)"
     best_stats["updated_at"] = datetime.now(timezone.utc).isoformat()
     return best_stats
 

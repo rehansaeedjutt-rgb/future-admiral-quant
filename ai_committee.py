@@ -22,7 +22,7 @@ def fetch_live_macro_news(asset_symbol, limit=6):
                 headlines.append(f"- {title} ({pub})")
     except Exception:
         pass
-    return "\n".join(headlines) if headlines else "No major breaking news fetched."
+    return "\n".join(headlines) if headlines else None
 
 def call_ollama(system_prompt, user_prompt):
     payload = {
@@ -71,6 +71,12 @@ def run_dual_ai_committee(asset, strategy, metrics: dict):
     }
 
     news = fetch_live_macro_news(asset.split("/")[0])
+    if not news:
+        return {
+            "consensus_approved": False,
+            "agent1_technical": {"vote": "SKIPPED", "confidence": 0, "reason": "Blocked by Fail-Closed News Gate"},
+            "agent2_fundamental": {"vote": "VETO", "risk_level": "HIGH", "reason": "Fail-Closed: Live macro news feed unavailable"}
+        }
     news_lower = news.lower()
     for kw in CRASH_KEYWORDS:
         if kw in news_lower:
