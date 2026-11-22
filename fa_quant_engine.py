@@ -1,3 +1,4 @@
+from ai_committee import run_dual_ai_committee
 import math
 import os, json, requests, yfinance as yf, pandas as pd, numpy as np
 from datetime import datetime, timezone

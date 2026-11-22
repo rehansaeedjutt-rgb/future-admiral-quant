@@ -25,6 +25,13 @@ jobs:
           pip install --upgrade pip
           pip install yfinance pandas numpy requests scikit-learn python-dotenv openai
 
+      - name: Start Ollama & Pull Lightweight Quant Model
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          ollama serve &
+          sleep 5
+          ollama pull qwen2.5:1.5b
+
       - name: Run Future Admiral AI-Quant Engine
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
