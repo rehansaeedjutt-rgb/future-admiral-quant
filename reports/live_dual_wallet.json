@@ -2,13 +2,25 @@
   "student_10usd": {
     "tier_name": "Student Tier ($10 Start | 1 Slot)",
     "created_at": "2026-11-23T19:00:25.462321+00:00",
-    "updated_at": "2026-11-23T19:46:25.749557+00:00",
+    "updated_at": "2026-11-23T21:51:19.370637+00:00",
     "starting_balance_usd": 10.0,
-    "cash_usd": 10.0,
+    "cash_usd": 0.0,
     "peak_equity_usd": 10.0,
     "circuit_breaker_tripped": false,
     "max_slots": 1,
-    "open_positions": [],
+    "open_positions": [
+      {
+        "asset": "RSG (US Stock 1D)",
+        "strategy": "Connors RSI(2) Extreme (<5)",
+        "entry_time": "2026-11-23T21:51:19.370637+00:00",
+        "entry_price": 248.061535,
+        "stop_loss": 237.4293,
+        "take_profit": 261.8579,
+        "breakeven_locked": false,
+        "allocated_usd": 10.0,
+        "qty": 0.04031257808672352
+      }
+    ],
     "closed_trades": 0,
     "wins": 0,
     "realized_pnl_usd": 0.0
@@ -16,13 +28,25 @@
   "pro_100usd": {
     "tier_name": "Pro Tier ($100 Start | 4 Slots)",
     "created_at": "2026-11-23T19:00:25.462321+00:00",
-    "updated_at": "2026-11-23T19:46:25.749557+00:00",
+    "updated_at": "2026-11-23T21:51:19.370637+00:00",
     "starting_balance_usd": 100.0,
-    "cash_usd": 100.0,
+    "cash_usd": 75.0,
     "peak_equity_usd": 100.0,
     "circuit_breaker_tripped": false,
     "max_slots": 4,
-    "open_positions": [],
+    "open_positions": [
+      {
+        "asset": "RSG (US Stock 1D)",
+        "strategy": "Connors RSI(2) Extreme (<5)",
+        "entry_time": "2026-11-23T21:51:19.370637+00:00",
+        "entry_price": 248.061535,
+        "stop_loss": 237.4293,
+        "take_profit": 261.8579,
+        "breakeven_locked": false,
+        "allocated_usd": 25.0,
+        "qty": 0.10078144521680879
+      }
+    ],
     "closed_trades": 0,
     "wins": 0,
     "realized_pnl_usd": 0.0

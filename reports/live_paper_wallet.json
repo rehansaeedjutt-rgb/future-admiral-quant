@@ -1,9 +1,19 @@
 {
   "created_at": "2026-11-23T19:00:25.462321+00:00",
-  "updated_at": "2026-11-23T19:45:03.972543+00:00",
+  "updated_at": "2026-11-23T21:51:19.370637+00:00",
   "starting_balance_usd": 10.0,
-  "cash_usd": 10.0,
-  "open_position": null,
+  "cash_usd": 0.0,
+  "open_position": {
+    "asset": "RSG (US Stock 1D)",
+    "strategy": "Connors RSI(2) Extreme (<5)",
+    "entry_time": "2026-11-23T21:51:19.370637+00:00",
+    "entry_price": 248.061535,
+    "stop_loss": 237.4293,
+    "take_profit": 261.8579,
+    "breakeven_locked": false,
+    "allocated_usd": 10.0,
+    "qty": 0.04031257808672352
+  },
   "closed_trades": 0,
   "wins": 0,
   "realized_pnl_usd": 0.0
