@@ -14,20 +14,20 @@
       "profit_factor": 3.45,
       "max_drawdown": 8.82,
       "net_return": 26.84,
-      "final_equity": 12684.42,
+      "final_equity": 12684.41,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-23T01:54:36.201349+00:00",
+      "updated_at": "2026-11-23T09:56:05.279304+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
       "asset": "ETH/USDT (Binance 1D)",
       "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 1712.14,
+      "price": 1720.12,
       "status": "FLAT / STANDBY",
       "candle_date": "2026-11-23",
-      "stop_loss": 1542.6796,
-      "take_profit": 1994.5739,
+      "stop_loss": 1547.98,
+      "take_profit": 2007.02,
       "total_trades": 29,
       "win_rate": 79.31,
       "profit_factor": 2.31,
@@ -36,7 +36,7 @@
       "final_equity": 15579.64,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-23T01:53:24.802102+00:00",
+      "updated_at": "2026-11-23T09:54:58.159896+00:00",
       "tier": "TIER 2 (75%-79%)"
     }
   ]
