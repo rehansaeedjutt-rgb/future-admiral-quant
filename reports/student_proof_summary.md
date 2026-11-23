@@ -1,5 +1,5 @@
 # Future Admiral — Live Forward-Test Proof (Original Rules)
-- **Updated (UTC):** `2026-11-23 19:21:28`
+- **Updated (UTC):** `2026-11-23 19:38:07`
 - **Risk Controls:** Hard Max `-4.5%` SL | Breakeven Lock at `+1.5%` | `15%` DD Circuit Breaker | `7D` Time-Stop
 
 | Tier | Start | Live Equity | Net Return | Open Trades | Closed Trades | Win Rate | Circuit Breaker |
