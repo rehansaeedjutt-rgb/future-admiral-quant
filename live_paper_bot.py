@@ -39,8 +39,10 @@ def fetch_live_price(asset_name, fallback_price):
 
 def _new_tier(name, start_bal, max_slots):
     now_iso = datetime.now(timezone.utc).isoformat()
+    min_wr = 80.0 if start_bal <= 10.0 else 70.0
     return {
         "tier_name": name,
+        "min_win_rate": min_wr,
         "created_at": now_iso,
         "updated_at": now_iso,
         "starting_balance_usd": start_bal,
@@ -149,7 +151,7 @@ def _process_tier(tier_key, tier, results, price_map, allow_entries, now_dt):
         if free_slots > 0 and tier["cash_usd"] >= 5.0:
             buys = [
                 r for r in results.values()
-                if float(r.get("price") or 0) > 0
+                if float(r.get("price") or 0) > 0 and float(r.get("win_rate") or 0) >= float(tier.get("min_win_rate", 70.0))
                 and r["asset"] not in open_assets
                 and any(k in str(r.get("status", "")).upper() for k in ("BUY", "LONG"))
                 and "FLAT" not in str(r.get("status", "")).upper()
