@@ -484,3 +484,9 @@ if __name__ == "__main__":
     verified_trades = [t for t in AUDIT_TRADES if (t["asset"], t["strategy"]) in verified_pairs]
     pd.DataFrame(verified_trades).to_csv("reports/audit_trade_log.csv", index=False)
     print(f"Audit Trade Log saved to reports/audit_trade_log.csv ({len(verified_trades)} verified trades)")
+
+    try:
+        from live_paper_bot import step_live_paper_bot
+        step_live_paper_bot()
+    except Exception as _bot_err:
+        print(f"[LIVE $10 PAPER-BOT] Hook warning: {_bot_err}")

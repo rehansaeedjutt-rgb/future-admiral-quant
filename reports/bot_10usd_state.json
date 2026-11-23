@@ -1,0 +1,12 @@
+{
+  "mode": "PAPER_SHADOW_BOT",
+  "starting_balance_usd": 10.0,
+  "simulated_final_equity_usd": 47.28,
+  "total_oos_return_pct": 372.79,
+  "executed_trades": 105,
+  "skipped_due_to_10usd_lock": 356,
+  "avg_trades_per_week": 0.66,
+  "avg_weekly_profit_usd": 0.233,
+  "avg_weekly_return_pct": 1.14,
+  "active_live_signals_now": []
+}
