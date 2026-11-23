@@ -79,9 +79,9 @@ def run_backtest(df, signals, asset_name, strategy_name):
         signals = signals.copy()
         ema_macro = df["close"].ewm(span=1200, adjust=False).mean()
         signals[(signals == 1) & (df["close"] <= ema_macro)] = 0
-    capital, realized_capital, position, entry_price, entry_date, signal_date, raw_entry_open, trades, eq = INITIAL_CAPITAL, INITIAL_CAPITAL, 0.0, 0.0, None, None, 0.0, [], []
+    cash, realized_capital, position, entry_price, entry_date, signal_date, raw_entry_open, trades, eq = INITIAL_CAPITAL, INITIAL_CAPITAL, 0.0, 0.0, None, None, 0.0, [], []
     slippage = 0.0005  # 0.05% per-side slippage on top of FEE_RATE (0.10%)
-    total_cost = FEE_RATE + slippage
+    has_atr = "atr" in df.columns
 
     for i in range(1, len(df)):
         exec_open = float(df["open"].iloc[i])
@@ -90,16 +90,25 @@ def run_backtest(df, signals, asset_name, strategy_name):
         prev_sig  = int(signals.iloc[i - 1])  # Strict shift(1): zero look-ahead bias
 
         if prev_sig == 1 and position == 0:
+            # Institutional ATR Volatility-Targeted Sizing (strictly i-1, zero look-ahead)
+            prev_close = float(df["close"].iloc[i - 1])
+            prev_atr = float(df["atr"].iloc[i - 1]) if has_atr else (prev_close * 0.02)
+            atr_pct = (prev_atr / prev_close) if (prev_close > 0 and prev_atr > 0) else 0.02
+            alloc_pct = min(1.0, max(0.15, 0.02 / atr_pct))
+
+            deploy_usd = cash * alloc_pct
+            cash -= deploy_usd
             fill_px = exec_open * (1 + slippage)
-            position = (capital * (1 - FEE_RATE)) / fill_px
+            position = (deploy_usd * (1 - FEE_RATE)) / fill_px
             signal_date = str(df["timestamp"].iloc[i - 1])[:10]
             raw_entry_open = exec_open
-            entry_price, entry_date, capital = fill_px, bar_date, 0.0
+            entry_price, entry_date = fill_px, bar_date
         elif prev_sig == -1 and position > 0:
             fill_px = exec_open * (1 - slippage)
             pos_usd = round(position * entry_price, 2)
-            capital = (position * fill_px) * (1 - FEE_RATE)
-            realized_capital = capital
+            proceeds = (position * fill_px) * (1 - FEE_RATE)
+            cash += proceeds
+            realized_capital = cash
             gross_pnl = ((fill_px - entry_price) / entry_price) * 100
             net_pnl = gross_pnl - (FEE_RATE * 200)
             trades.append(net_pnl)
@@ -120,11 +129,11 @@ def run_backtest(df, signals, asset_name, strategy_name):
                 "slippage_roundtrip_pct": round(slippage * 200, 2),
                 "gross_pnl_after_slippage_pct": round(gross_pnl, 2),
                 "net_pnl_pct": round(net_pnl, 2),
-                "equity_after_usd": round(capital, 2)
+                "equity_after_usd": round(cash, 2)
             })
             position = 0.0
 
-        eq.append(capital if position == 0 else position * close_px)
+        eq.append(cash + (position * close_px))
 
     final_eq = realized_capital
     net_ret = ((final_eq - INITIAL_CAPITAL) / INITIAL_CAPITAL) * 100
