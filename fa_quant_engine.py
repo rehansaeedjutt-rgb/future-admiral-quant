@@ -349,7 +349,7 @@ def evaluate_asset(df, asset_name):
         is_wins = is_t * (is_wr / 100.0)
         is_z = ((is_wins - 0.5 * is_t) / (0.5 * (is_t ** 0.5))) if is_t > 0 else -10.0
         pf_cap = min(is_stats["profit_factor"], 4.0)
-        score = ((is_z * 25.0) + (is_wr * 0.6) + (pf_cap * 8.0) - (is_stats["max_drawdown"] * 0.8)) if (is_t >= 8 and is_wr >= 65.0 and is_stats["profit_factor"] >= 1.2) else (is_z * 10.0 - 1000.0)
+        score = ((is_z * 25.0) + (is_wr * 0.6) + (pf_cap * 8.0) - (is_stats["max_drawdown"] * 0.8)) if (is_t >= 15 and is_wr >= 65.0 and is_stats["profit_factor"] >= 1.2) else (is_z * 10.0 - 1000.0)
         if score > best_is_score:
             best_is_score, best_name = score, name
     # Discard in-sample selection trades from AUDIT_TRADES

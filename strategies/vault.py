@@ -50,6 +50,8 @@ def add_indicators(df):
     df["keltner_lower"] = df["ema21"] - (1.5 * df["atr"])
     df["high_5"] = df["high"].rolling(5).max().shift(1)
     df["high_10"] = df["high"].rolling(10).max().shift(1)
+    df["low_10"] = df["low"].rolling(10).min().shift(1)
+    df["bar_range"] = df["high"] - df["low"]
 
     return df.dropna().reset_index(drop=True)
 
@@ -179,6 +181,48 @@ def strat_volume_climax_absorption(df):
     sig[exit_cond & ~entry] = -1
     return sig
 
+
+def strat_liq_range_fade(df):
+    # Forced-liquidation single-bar panic expansion (>1.8x ATR red bar) in macro uptrend
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema200"]) &
+        (df["close"] < df["open"]) &
+        (df["bar_range"] > (1.8 * df["atr"])) &
+        (df["rsi2"] < 15)
+    )
+    exit_cond = (df["close"] > df["ema5"]) | (df["close"] > df["high"].shift(1))
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
+def strat_stophunt_low10_sweep(df):
+    # Turtle-Soup liquidity sweep below prior 10-bar low inside macro uptrend
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema200"]) &
+        (df["low"] < df["low_10"]) &
+        (df["rsi3"] < 25)
+    )
+    exit_cond = (df["close"] > df["ema5"]) | (df["close"] > df["high"].shift(1))
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
+def strat_regime_rsi2_10(df):
+    # Higher-frequency RSI(2) < 10 dip-buyer locked to strong uptrend regime (EMA50 > EMA200)
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema200"]) &
+        (df["ema50"] > df["ema200"]) &
+        (df["close"] < df["ema5"]) &
+        (df["rsi2"] < 10)
+    )
+    exit_cond = (df["close"] > df["ema5"])
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
 STRATEGY_VAULT = {
     "IBS + RSI(2) Institutional Snapback": strat_ibs_rsi2_snapback,
     "3-Bar Panic Pullback (Quick Exit)": strat_3bar_pullback,
@@ -192,4 +236,7 @@ STRATEGY_VAULT = {
     "Keltner ATR Volatility Reversal": strat_keltner_reversal,
     "ATR Panic Flush Snapback": strat_atr_panic_flush,
     "Volume Climax Whale Absorption": strat_volume_climax_absorption,
+    "Liquidation Range-Expansion Fade": strat_liq_range_fade,
+    "Stop-Hunt 10-Bar Low Sweep": strat_stophunt_low10_sweep,
+    "Regime-Aligned RSI(2) Pullback (<10)": strat_regime_rsi2_10,
 }
