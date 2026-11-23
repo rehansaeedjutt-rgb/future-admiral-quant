@@ -1,3 +1,6 @@
+import logging
+logging.getLogger("yfinance").setLevel(logging.CRITICAL)
+from io import StringIO
 import time
 from ai_committee import run_dual_ai_committee
 import math
@@ -387,39 +390,58 @@ if __name__ == "__main__":
         "AZO","ROST","LIN","APD","FCX","NEM","SLB","EOG","MPC","PSX",
         "DUK","SO","AEP","XBI","XLI","XLP","XLY","XLB","XLU","GLD","TLT"
     ]
-    print(f"Chunk-downloading 6Y data for {len(TOP_STOCKS)} US Stocks (25 per batch)...")
+    os.makedirs("data_cache/stocks", exist_ok=True)
     _STOCK_CACHE = {}
-    for _i in range(0, len(TOP_STOCKS), 25):
-        _chunk = TOP_STOCKS[_i:_i + 25]
-        try:
-            _batch = yf.download(_chunk, period="6y", interval="1d", group_by="ticker", threads=False, progress=False)
-            for _sym in _chunk:
+    _now = time.time()
+    _missing = []
+    for _sym in TOP_STOCKS:
+        _cpath = f"data_cache/stocks/{_sym}.csv"
+        if os.path.exists(_cpath) and (_now - os.path.getmtime(_cpath)) < 86400:
+            try:
+                _cdf = pd.read_csv(_cpath)
+                if len(_cdf) > 250:
+                    _STOCK_CACHE[_sym] = _cdf
+                    continue
+            except Exception:
+                pass
+        _missing.append(_sym)
+
+    if _missing:
+        print(f"Downloading {len(_missing)} US Stocks via Direct Chart JSON API (no cookie/crumb)...")
+        _hdrs = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
+        for _idx, _sym in enumerate(_missing, 1):
+            for _host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
                 try:
-                    _df = _batch[_sym] if len(_chunk) > 1 else _batch
-                    if isinstance(_df.columns, pd.MultiIndex):
-                        _df.columns = _df.columns.get_level_values(0)
-                    _df = _df.dropna(how="all").reset_index()
-                    if not _df.empty:
-                        _STOCK_CACHE[_sym] = _df
+                    _url = f"https://{_host}/v8/finance/chart/{_sym}"
+                    _r = _HTTP_SESSION.get(_url, params={"range": "6y", "interval": "1d"}, headers=_hdrs, timeout=10)
+                    if _r.status_code == 200:
+                        _res = (_r.json().get("chart", {}).get("result") or [None])[0]
+                        if _res and _res.get("timestamp"):
+                            _q = _res["indicators"]["quote"][0]
+                            _sdf = pd.DataFrame({
+                                "timestamp": pd.to_datetime(_res["timestamp"], unit="s").strftime("%Y-%m-%d"),
+                                "open": _q.get("open"),
+                                "high": _q.get("high"),
+                                "low": _q.get("low"),
+                                "close": _q.get("close"),
+                                "volume": _q.get("volume"),
+                            }).dropna().reset_index(drop=True)
+                            if len(_sdf) > 250:
+                                _sdf.to_csv(f"data_cache/stocks/{_sym}.csv", index=False)
+                                _STOCK_CACHE[_sym] = _sdf
+                                break
                 except Exception:
                     pass
-        except Exception as _e:
-            print(f"Batch {_i//25 + 1} warning: {_e}")
-        time.sleep(1.5)
+                time.sleep(0.25)
+            if _idx % 25 == 0 or _idx == len(_missing):
+                print(f"  [Stocks] {len(_STOCK_CACHE)}/{len(TOP_STOCKS)} cached...")
+            time.sleep(0.15)
+        print(f"Ready: {len(_STOCK_CACHE)}/{len(TOP_STOCKS)} US Stocks loaded.")
 
     def _get_batch_stock(sym):
         df = _STOCK_CACHE.get(sym, pd.DataFrame()).copy()
         if df.empty:
-            time.sleep(1.0)
-            df = yf.download(sym, period="6y", interval="1d", progress=False)
-            if isinstance(df.columns, pd.MultiIndex):
-                df.columns = df.columns.get_level_values(0)
-            df = df.dropna(how="all").reset_index()
-        df.columns = [str(c).lower() for c in df.columns]
-        if "date" in df.columns:
-            df = df.rename(columns={"date": "timestamp"})
-        elif "datetime" in df.columns:
-            df = df.rename(columns={"datetime": "timestamp"})
+            raise ValueError(f"No stock data for {sym}")
         return df[["timestamp", "open", "high", "low", "close", "volume"]]
 
     TOP_CRYPTO_4H = TOP_CRYPTO[:25]
