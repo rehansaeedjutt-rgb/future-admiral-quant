@@ -338,7 +338,7 @@ def evaluate_asset(df, asset_name):
     audit_len_before = len(AUDIT_TRADES)
     for name, fn in STRATEGY_VAULT.items():
         is_stats = run_backtest(df_is, fn(df_is), asset_name, name)
-        score = ((is_stats["win_rate"] * 0.6) + (is_stats["profit_factor"] * 12) + is_stats["net_return"] - (is_stats["max_drawdown"] * 1.2)) if (is_stats["total_trades"] >= 5 and is_stats["profit_factor"] >= 1.0) else -99999
+        score = ((is_stats["win_rate"] * 0.6) + (is_stats["profit_factor"] * 12) + is_stats["net_return"] - (is_stats["max_drawdown"] * 1.2)) if (is_stats["total_trades"] >= 4 and is_stats["profit_factor"] >= 1.0) else -99999
         if score > best_is_score:
             best_is_score, best_name = score, name
     # Discard in-sample selection trades from AUDIT_TRADES
@@ -365,7 +365,19 @@ if __name__ == "__main__":
     TOP_STOCKS = [
         "NVDA","AAPL","MSFT","GOOGL","AMZN","META","TSLA","AVGO","AMD","NFLX",
         "JPM","V","MA","UNH","LLY","XOM","COST","WMT","HD","PG",
-        "CRM","ORCL","ADBE","SPY","QQQ", "BRK-B", "JNJ", "ABBV", "MRK", "PEP", "KO", "MCD", "DIS", "CSCO", "IBM", "TXN", "QCOM", "INTU", "NOW", "GS", "MS", "BLK", "CAT", "DE", "HON", "UNP", "LMT", "RTX", "LOW", "TJX", "NKE", "SBUX", "CVX", "COP", "NEE", "IWM", "DIA", "XLK", "XLF", "XLV", "XLE", "SMH"
+        "CRM","ORCL","ADBE","SPY","QQQ","BRK-B","JNJ","ABBV","MRK","PEP",
+        "KO","MCD","DIS","CSCO","IBM","TXN","QCOM","INTU","NOW","GS",
+        "MS","BLK","CAT","DE","HON","UNP","LMT","RTX","LOW","TJX",
+        "NKE","SBUX","CVX","COP","NEE","IWM","DIA","XLK","XLF","XLV",
+        "XLE","SMH","PLTR","PANW","CRWD","SNOW","NET","SHOP","UBER","ABNB",
+        "COIN","MSTR","MU","AMAT","LRCX","KLAC","MRVL","ADI","SNPS","CDNS",
+        "FTNT","ISRG","TMO","DHR","ABT","BMY","AMGN","GILD","VRTX","REGN",
+        "SYK","BSX","MDT","CI","ELV","CVS","PFE","WFC","BAC","C",
+        "SCHW","AXP","SPGI","ICE","CME","CB","PGR","TRV","MMC","GE",
+        "ETN","PH","ITW","EMR","FDX","UPS","BA","GD","NOC","WM",
+        "RSG","PM","MO","MDLZ","CL","TGT","BKNG","MAR","CMG","ORLY",
+        "AZO","ROST","LIN","APD","FCX","NEM","SLB","EOG","MPC","PSX",
+        "DUK","SO","AEP","XBI","XLI","XLP","XLY","XLB","XLU","GLD","TLT"
     ]
     print("Batch-downloading 6Y data for all US Stocks in one request...")
     _STOCK_BATCH = yf.download(TOP_STOCKS, period="6y", interval="1d", group_by="ticker", threads=True, progress=False)
@@ -384,7 +396,7 @@ if __name__ == "__main__":
             df = df.rename(columns={"datetime": "timestamp"})
         return df[["timestamp", "open", "high", "low", "close", "volume"]]
 
-    TOP_CRYPTO_4H = TOP_CRYPTO[:10]
+    TOP_CRYPTO_4H = TOP_CRYPTO[:25]
     assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 2200)) for c in TOP_CRYPTO] + \
              [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 3000)) for c in TOP_CRYPTO_4H] + \
              [(f"{s} (US Stock 1D)", lambda sym=s: _get_batch_stock(sym)) for s in TOP_STOCKS]
@@ -397,7 +409,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error on {label}: {e}")
     # CLEAN FILTER & TOP-5 DISCORD DISPATCH
-    results = [r for r in results if r.get("total_trades", 0) >= 15 and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and r.get("max_drawdown", 100) <= 25.0 and r.get("win_rate", 0) >= 75.0 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
+    results = [r for r in results if r.get("total_trades", 0) >= (15 if "4H" in r.get("asset", "") else 10) and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and r.get("max_drawdown", 100) <= 25.0 and r.get("win_rate", 0) >= 75.0 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
     for r in results:
         r["tier"] = "TIER 1 (80%+ ELITE)" if float(r.get("win_rate", 0)) >= 80.0 else "TIER 2 (75%-79%)"
     results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
