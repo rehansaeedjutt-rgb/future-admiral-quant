@@ -151,6 +151,34 @@ def strat_keltner_reversal(df):
     sig[exit_cond & ~entry] = -1
     return sig
 
+
+def strat_atr_panic_flush(df):
+    # Volatility-normalized panic flush below EMA(5) in macro uptrend, fast 1-3 bar exit
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema200"]) &
+        ((df["ema5"] - df["close"]) > (1.2 * df["atr"])) &
+        (df["ibs"] < 0.35)
+    )
+    exit_cond = (df["close"] > df["ema5"]) | (df["close"] > df["high"].shift(1))
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
+def strat_volume_climax_absorption(df):
+    # Forced liquidation volume spike (>1.5x avg) + deep panic close -> fast snapback exit
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema200"]) &
+        (df["vol_ratio"] > 1.5) &
+        (df["ibs"] < 0.30) &
+        (df["rsi3"] < 20)
+    )
+    exit_cond = (df["close"] > df["ema5"]) | (df["ibs"] > 0.70)
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
 STRATEGY_VAULT = {
     "IBS + RSI(2) Institutional Snapback": strat_ibs_rsi2_snapback,
     "3-Bar Panic Pullback (Quick Exit)": strat_3bar_pullback,
@@ -162,4 +190,6 @@ STRATEGY_VAULT = {
     "Volatility Squeeze Volume Breakout": strat_vol_squeeze_breakout,
     "Trend Pullback EMA21 Reclaim": strat_trend_pullback_reclaim,
     "Keltner ATR Volatility Reversal": strat_keltner_reversal,
+    "ATR Panic Flush Snapback": strat_atr_panic_flush,
+    "Volume Climax Whale Absorption": strat_volume_climax_absorption,
 }

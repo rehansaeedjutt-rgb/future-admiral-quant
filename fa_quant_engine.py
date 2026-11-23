@@ -1,3 +1,4 @@
+import time
 from ai_committee import run_dual_ai_committee
 import math
 import os, json, requests, yfinance as yf, pandas as pd, numpy as np
@@ -36,10 +37,12 @@ def fetch_binance_data(symbol, interval="1d", total_candles=2200):
                     break
             except Exception:
                 pass
+            time.sleep(0.5 * (attempt + 1))
         if not isinstance(data, list) or len(data) == 0:
             break
         all_rows = data + all_rows
         end_time = data[0][0] - 1
+        time.sleep(0.15)
         if len(data) < 1000:
             break
     if not all_rows:
@@ -338,8 +341,12 @@ def evaluate_asset(df, asset_name):
     audit_len_before = len(AUDIT_TRADES)
     for name, fn in STRATEGY_VAULT.items():
         is_stats = run_backtest(df_is, fn(df_is), asset_name, name)
+        is_t = is_stats["total_trades"]
+        is_wr = is_stats["win_rate"]
+        is_wins = is_t * (is_wr / 100.0)
+        is_z = ((is_wins - 0.5 * is_t) / (0.5 * (is_t ** 0.5))) if is_t > 0 else -10.0
         pf_cap = min(is_stats["profit_factor"], 4.0)
-        score = ((is_stats["win_rate"] * 0.8) + (pf_cap * 10.0) + (is_stats["total_trades"] * 1.2) - (is_stats["max_drawdown"] * 1.0)) if (is_stats["total_trades"] >= 10 and is_stats["profit_factor"] >= 1.1) else (is_stats["total_trades"] - 1000 if is_stats["profit_factor"] >= 1.0 else -99999)
+        score = ((is_z * 25.0) + (is_wr * 0.6) + (pf_cap * 8.0) - (is_stats["max_drawdown"] * 0.8)) if (is_t >= 8 and is_wr >= 65.0 and is_stats["profit_factor"] >= 1.2) else (is_z * 10.0 - 1000.0)
         if score > best_is_score:
             best_is_score, best_name = score, name
     # Discard in-sample selection trades from AUDIT_TRADES
@@ -380,17 +387,35 @@ if __name__ == "__main__":
         "AZO","ROST","LIN","APD","FCX","NEM","SLB","EOG","MPC","PSX",
         "DUK","SO","AEP","XBI","XLI","XLP","XLY","XLB","XLU","GLD","TLT"
     ]
-    print("Batch-downloading 6Y data for all US Stocks in one request...")
-    _STOCK_BATCH = yf.download(TOP_STOCKS, period="6y", interval="1d", group_by="ticker", threads=True, progress=False)
+    print(f"Chunk-downloading 6Y data for {len(TOP_STOCKS)} US Stocks (25 per batch)...")
+    _STOCK_CACHE = {}
+    for _i in range(0, len(TOP_STOCKS), 25):
+        _chunk = TOP_STOCKS[_i:_i + 25]
+        try:
+            _batch = yf.download(_chunk, period="6y", interval="1d", group_by="ticker", threads=False, progress=False)
+            for _sym in _chunk:
+                try:
+                    _df = _batch[_sym] if len(_chunk) > 1 else _batch
+                    if isinstance(_df.columns, pd.MultiIndex):
+                        _df.columns = _df.columns.get_level_values(0)
+                    _df = _df.dropna(how="all").reset_index()
+                    if not _df.empty:
+                        _STOCK_CACHE[_sym] = _df
+                except Exception:
+                    pass
+        except Exception as _e:
+            print(f"Batch {_i//25 + 1} warning: {_e}")
+        time.sleep(1.5)
 
     def _get_batch_stock(sym):
-        df = _STOCK_BATCH[sym].dropna(how="all").reset_index()
+        df = _STOCK_CACHE.get(sym, pd.DataFrame()).copy()
         if df.empty:
+            time.sleep(1.0)
             df = yf.download(sym, period="6y", interval="1d", progress=False)
             if isinstance(df.columns, pd.MultiIndex):
                 df.columns = df.columns.get_level_values(0)
             df = df.dropna(how="all").reset_index()
-        df.columns = [c.lower() for c in df.columns]
+        df.columns = [str(c).lower() for c in df.columns]
         if "date" in df.columns:
             df = df.rename(columns={"date": "timestamp"})
         elif "datetime" in df.columns:
@@ -399,7 +424,7 @@ if __name__ == "__main__":
 
     TOP_CRYPTO_4H = TOP_CRYPTO[:25]
     assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 2200)) for c in TOP_CRYPTO] + \
-             [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 3000)) for c in TOP_CRYPTO_4H] + \
+             [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 6000)) for c in TOP_CRYPTO_4H] + \
              [(f"{s} (US Stock 1D)", lambda sym=s: _get_batch_stock(sym)) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
