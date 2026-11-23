@@ -1,6 +1,7 @@
 ﻿import os, sys, json, requests
 from datetime import datetime, timezone
 import pandas as pd
+from ai_models.news_shield import evaluate_trade_safety
 
 LIVE_JSON = "reports/live_stats.json"
 DUAL_WALLET_JSON = "reports/live_dual_wallet.json"
@@ -161,6 +162,10 @@ def _process_tier(tier_key, tier, results, price_map, allow_entries, now_dt):
                 alloc = round(tier["cash_usd"] / free_now, 4)
                 if alloc < 5.0:
                     break
+                shield = evaluate_trade_safety(sig["asset"])
+                if not shield["allow"]:
+                    logs.append(f"[{tier_key}] {shield['verdict']} {sig['asset']}: {shield['reason']}")
+                    continue
                 raw_px = fetch_live_price(sig["asset"], sig["price"])
                 entry_px = raw_px * (1.0 + FEE_SLIPPAGE)
 
