@@ -6,6 +6,7 @@ def add_indicators(df):
     df["ema5"]   = df["close"].ewm(span=5, adjust=False).mean()
     df["ema21"]  = df["close"].ewm(span=21, adjust=False).mean()
     df["ema50"]  = df["close"].ewm(span=50, adjust=False).mean()
+    df["ema100"] = df["close"].ewm(span=100, adjust=False).mean()
     df["ema200"] = df["close"].ewm(span=200, adjust=False).mean()
 
     # Internal Bar Strength (IBS): 0 = closed at low, 1 = closed at high
@@ -50,6 +51,9 @@ def add_indicators(df):
     df["keltner_lower"] = df["ema21"] - (1.5 * df["atr"])
     df["high_5"] = df["high"].rolling(5).max().shift(1)
     df["high_10"] = df["high"].rolling(10).max().shift(1)
+    _hh14 = df["high"].rolling(14).max()
+    _ll14 = df["low"].rolling(14).min()
+    df["willr"] = -100.0 * (_hh14 - df["close"]) / (_hh14 - _ll14).replace(0, np.nan)
     df["low_10"] = df["low"].rolling(10).min().shift(1)
     df["bar_range"] = df["high"] - df["low"]
 
@@ -223,6 +227,46 @@ def strat_regime_rsi2_10(df):
     sig[exit_cond & ~entry] = -1
     return sig
 
+
+def strat_capitulation_rubberband(df):
+    # All-regime forced-liquidation rubber-band (no EMA200 lock -> works in bull & bear markets)
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["rsi2"] < 3) &
+        (df["close"] < df["bb_lower"]) &
+        (df["ibs"] < 0.25)
+    )
+    exit_cond = (df["close"] > df["high"].shift(1)) | (df["rsi2"] > 65)
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
+def strat_ema50_altseason_snapback(df):
+    # Fast-cycle EMA50 regime dip-buyer -> captures every 2-4 month crypto mini-season
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema50"]) &
+        (df["rsi2"] < 5) &
+        (df["ibs"] < 0.30)
+    )
+    exit_cond = (df["close"] > df["ema5"]) | (df["close"] > df["high"].shift(1))
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
+def strat_willr_extreme_flush(df):
+    # Deep exhaustion flush: Williams %R(14) < -95 + RSI(2) < 5 above EMA100
+    sig = pd.Series(0, index=df.index)
+    entry = (
+        (df["close"] > df["ema100"]) &
+        (df["willr"] < -95) &
+        (df["rsi2"] < 5)
+    )
+    exit_cond = (df["close"] > df["ema5"]) | (df["ibs"] > 0.75)
+    sig[entry] = 1
+    sig[exit_cond & ~entry] = -1
+    return sig
+
 STRATEGY_VAULT = {
     "IBS + RSI(2) Institutional Snapback": strat_ibs_rsi2_snapback,
     "3-Bar Panic Pullback (Quick Exit)": strat_3bar_pullback,
@@ -239,4 +283,7 @@ STRATEGY_VAULT = {
     "Liquidation Range-Expansion Fade": strat_liq_range_fade,
     "Stop-Hunt 10-Bar Low Sweep": strat_stophunt_low10_sweep,
     "Regime-Aligned RSI(2) Pullback (<10)": strat_regime_rsi2_10,
+    "All-Regime Capitulation Rubber-Band": strat_capitulation_rubberband,
+    "Fast-Cycle EMA50 Alt-Season Snapback": strat_ema50_altseason_snapback,
+    "Williams %R + RSI(2) Exhaustion Flush": strat_willr_extreme_flush,
 }

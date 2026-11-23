@@ -371,7 +371,7 @@ if __name__ == "__main__":
         "TONUSDT","SUIUSDT","LTCUSDT","BCHUSDT","NEARUSDT","APTUSDT","ICPUSDT","UNIUSDT","ETCUSDT","XLMUSDT",
         "HBARUSDT","FILUSDT","ATOMUSDT","ARBUSDT","OPUSDT","INJUSDT","IMXUSDT","STXUSDT","RENDERUSDT","FETUSDT",
         "TAOUSDT","AAVEUSDT","MKRUSDT","GRTUSDT","VETUSDT","ALGOUSDT","FTMUSDT","SEIUSDT","TIAUSDT","RUNEUSDT",
-        "THETAUSDT","FLOWUSDT","EGLDUSDT","AXSUSDT","SANDUSDT","MANAUSDT","GALAUSDT","CHZUSDT","QNTUSDT","KAVAUSDT"
+        "THETAUSDT","FLOWUSDT","EGLDUSDT","AXSUSDT","SANDUSDT","MANAUSDT","GALAUSDT","CHZUSDT","QNTUSDT","KAVAUSDT", "DOGEUSDT", "SHIBUSDT", "CRVUSDT", "LDOUSDT", "CAKEUSDT", "ZECUSDT", "XTZUSDT", "NEOUSDT", "DYDXUSDT", "ENSUSDT"
     ]
     TOP_STOCKS = [
         "NVDA","AAPL","MSFT","GOOGL","AMZN","META","TSLA","AVGO","AMD","NFLX",
@@ -444,9 +444,9 @@ if __name__ == "__main__":
             raise ValueError(f"No stock data for {sym}")
         return df[["timestamp", "open", "high", "low", "close", "volume"]]
 
-    TOP_CRYPTO_4H = TOP_CRYPTO[:25]
+    TOP_CRYPTO_12H = TOP_CRYPTO[:30]
     assets = [(f"{c.replace('USDT','/USDT')} (Binance 1D)", lambda sym=c: fetch_binance_data(sym, "1d", 2200)) for c in TOP_CRYPTO] + \
-             [(f"{c.replace('USDT','/USDT')} (Binance 4H)", lambda sym=c: fetch_binance_data(sym, "4h", 6000)) for c in TOP_CRYPTO_4H] + \
+             [(f"{c.replace('USDT','/USDT')} (Binance 12H)", lambda sym=c: fetch_binance_data(sym, "12h", 4000)) for c in TOP_CRYPTO_12H] + \
              [(f"{s} (US Stock 1D)", lambda sym=s: _get_batch_stock(sym)) for s in TOP_STOCKS]
     for label, fetcher in assets:
         try:
@@ -457,7 +457,7 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error on {label}: {e}")
     # CLEAN FILTER & TOP-5 DISCORD DISPATCH
-    results = [r for r in results if r.get("total_trades", 0) >= (15 if "4H" in r.get("asset", "") else 10) and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and r.get("max_drawdown", 100) <= 25.0 and r.get("win_rate", 0) >= 70.0 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
+    results = [r for r in results if r.get("total_trades", 0) >= (15 if "12H" in r.get("asset", "") else 10) and r.get("net_return", 0) > 0 and r.get("profit_factor", 0) >= 1.5 and r.get("max_drawdown", 100) <= 25.0 and r.get("win_rate", 0) >= 70.0 and (sum(math.comb(int(r["total_trades"]), i) for i in range(round(int(r["total_trades"]) * (r["win_rate"]/100.0)), int(r["total_trades"]) + 1)) * (0.5 ** int(r["total_trades"])) * 100) < 5.0]
     for r in results:
         wr_val = float(r.get("win_rate", 0)); r["tier"] = "TIER 1 (80%+ ELITE)" if wr_val >= 80.0 else ("TIER 2 (75%-79% STRONG)" if wr_val >= 75.0 else "TIER 3 (70%-74% VERIFIED)")
     results.sort(key=lambda x: (x["win_rate"], x["profit_factor"]), reverse=True)
