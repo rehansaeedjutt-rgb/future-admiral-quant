@@ -374,7 +374,7 @@ if __name__ == "__main__":
         "COIN","MSTR","MU","AMAT","LRCX","KLAC","MRVL","ADI","SNPS","CDNS",
         "FTNT","ISRG","TMO","DHR","ABT","BMY","AMGN","GILD","VRTX","REGN",
         "SYK","BSX","MDT","CI","ELV","CVS","PFE","WFC","BAC","C",
-        "SCHW","AXP","SPGI","ICE","CME","CB","PGR","TRV","MMC","GE",
+        "SCHW","AXP","SPGI","ICE","CME","CB","PGR","TRV","GE",
         "ETN","PH","ITW","EMR","FDX","UPS","BA","GD","NOC","WM",
         "RSG","PM","MO","MDLZ","CL","TGT","BKNG","MAR","CMG","ORLY",
         "AZO","ROST","LIN","APD","FCX","NEM","SLB","EOG","MPC","PSX",

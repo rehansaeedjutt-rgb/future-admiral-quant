@@ -9,7 +9,9 @@ CRASH_KEYWORDS = [
 ]
 
 def fetch_live_macro_news(asset_symbol, limit=6):
-    query = f"{asset_symbol} crypto OR bitcoin OR federal reserve OR trump tariff"
+    clean_sym = asset_symbol.split("/")[0].split("(")[0].strip()
+    is_stock = "Stock" in asset_symbol
+    query = f"{clean_sym} stock OR S&P 500 OR federal reserve OR tariff" if is_stock else f"{clean_sym} crypto OR bitcoin OR federal reserve OR tariff"
     url = f"https://news.google.com/rss/search?q={requests.utils.quote(query)}&hl=en-US&gl=US&ceid=US:en"
     headlines = []
     try:
@@ -70,7 +72,7 @@ def run_dual_ai_committee(asset, strategy, metrics: dict):
         "max_drawdown_pct": metrics.get("max_drawdown")
     }
 
-    news = fetch_live_macro_news(asset.split("/")[0])
+    news = fetch_live_macro_news(asset)
     if not news:
         return {
             "consensus_approved": False,
