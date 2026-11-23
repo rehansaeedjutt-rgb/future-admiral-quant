@@ -405,7 +405,7 @@ if __name__ == "__main__":
     _missing = []
     for _sym in TOP_STOCKS:
         _cpath = f"data_cache/stocks/{_sym}.csv"
-        if os.path.exists(_cpath) and (_now - os.path.getmtime(_cpath)) < 86400:
+        if os.path.exists(_cpath) and (_now - os.path.getmtime(_cpath)) < 10800:
             try:
                 _cdf = pd.read_csv(_cpath)
                 if len(_cdf) > 250:
