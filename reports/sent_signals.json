@@ -20,5 +20,12 @@
   "XBI (US Stock 1D)|EXIT|2026-11-23": true,
   "TRX/USDT (Binance 1D)|EXIT|2026-11-25": true,
   "VRTX (US Stock 1D)|EXIT|2026-11-23": true,
-  "NVDA (US Stock 1D)|EXIT|2026-11-24": true
+  "NVDA (US Stock 1D)|EXIT|2026-11-24": true,
+  "THETA/USDT (Binance 1D)|EXIT|2026-11-25": true,
+  "MU (US Stock 1D)|EXIT|2026-11-25": true,
+  "UNI/USDT (Binance 12H)|EXIT|2026-11-25": true,
+  "ETH/USDT (Binance 12H)|EXIT|2026-11-25": true,
+  "PANW (US Stock 1D)|EXIT|2026-11-25": true,
+  "EMR (US Stock 1D)|EXIT|2026-11-25": true,
+  "LTC/USDT (Binance 12H)|EXIT|2026-11-25": true
 }
