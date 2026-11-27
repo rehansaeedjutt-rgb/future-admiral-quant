@@ -17,7 +17,7 @@
       "final_equity": 13050.15,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:07.200830+00:00",
+      "updated_at": "2026-11-27T12:54:22.686939+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -36,7 +36,7 @@
       "final_equity": 11719.25,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:18.319691+00:00",
+      "updated_at": "2026-11-27T12:54:33.798499+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -55,7 +55,7 @@
       "final_equity": 11852.79,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:24.181684+00:00",
+      "updated_at": "2026-11-27T12:54:39.602894+00:00",
       "tier": "TIER 1 (80%+ ELITE)"
     },
     {
@@ -74,7 +74,7 @@
       "final_equity": 15881.18,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:07.956779+00:00",
+      "updated_at": "2026-11-27T12:54:23.449169+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -93,7 +93,7 @@
       "final_equity": 18146.82,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:49.105746+00:00",
+      "updated_at": "2026-11-27T12:54:04.618655+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -112,26 +112,7 @@
       "final_equity": 13092.76,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:11.036034+00:00",
-      "tier": "TIER 2 (75%-79% STRONG)"
-    },
-    {
-      "asset": "UNI/USDT (Binance 12H)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 4.84,
-      "status": "EXIT / SELL",
-      "candle_date": "2026-11-27",
-      "stop_loss": 4.4484,
-      "take_profit": 5.5007,
-      "total_trades": 48,
-      "win_rate": 77.08,
-      "profit_factor": 2.51,
-      "max_drawdown": 13.33,
-      "net_return": 40.69,
-      "final_equity": 14069.38,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:29.330613+00:00",
+      "updated_at": "2026-11-27T12:54:26.518821+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -150,7 +131,7 @@
       "final_equity": 11211.52,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:21:59.965553+00:00",
+      "updated_at": "2026-11-27T12:52:10.294057+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -169,7 +150,7 @@
       "final_equity": 11444.83,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:52.652009+00:00",
+      "updated_at": "2026-11-27T12:54:08.146163+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -188,7 +169,7 @@
       "final_equity": 10612.23,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:55.100300+00:00",
+      "updated_at": "2026-11-27T12:54:10.597065+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -207,7 +188,7 @@
       "final_equity": 17247.51,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:50.910853+00:00",
+      "updated_at": "2026-11-27T12:54:06.414175+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -226,7 +207,7 @@
       "final_equity": 12831.88,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:22:05.961557+00:00",
+      "updated_at": "2026-11-27T12:52:16.593734+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -245,7 +226,7 @@
       "final_equity": 13425.33,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:51.165169+00:00",
+      "updated_at": "2026-11-27T12:54:06.667607+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
     },
     {
@@ -264,8 +245,27 @@
       "final_equity": 16157.98,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:16.315674+00:00",
+      "updated_at": "2026-11-27T12:54:31.793794+00:00",
       "tier": "TIER 2 (75%-79% STRONG)"
+    },
+    {
+      "asset": "AVAX/USDT (Binance 12H)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 6.78,
+      "status": "EXIT / SELL",
+      "candle_date": "2026-11-27",
+      "stop_loss": 6.3546,
+      "take_profit": 7.4889,
+      "total_trades": 27,
+      "win_rate": 74.07,
+      "profit_factor": 6.63,
+      "max_drawdown": 7.03,
+      "net_return": 35.48,
+      "final_equity": 13548.38,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
+      "updated_at": "2026-11-27T12:53:25.387532+00:00",
+      "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
       "asset": "RSG (US Stock 1D)",
@@ -283,26 +283,7 @@
       "final_equity": 14221.48,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:19.071967+00:00",
-      "tier": "TIER 3 (70%-74% VERIFIED)"
-    },
-    {
-      "asset": "ETH/USDT (Binance 12H)",
-      "strategy": "3-Bar Panic Pullback (Quick Exit)",
-      "price": 1730.06,
-      "status": "EXIT / SELL",
-      "candle_date": "2026-11-27",
-      "stop_loss": 1592.7114,
-      "take_profit": 1958.9743,
-      "total_trades": 27,
-      "win_rate": 74.07,
-      "profit_factor": 1.92,
-      "max_drawdown": 9.91,
-      "net_return": 9.06,
-      "final_equity": 10905.88,
-      "max_risk_usd": 100.0,
-      "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:02.788911+00:00",
+      "updated_at": "2026-11-27T12:54:34.542610+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
@@ -321,7 +302,26 @@
       "final_equity": 12118.48,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:07.706740+00:00",
+      "updated_at": "2026-11-27T12:54:23.198395+00:00",
+      "tier": "TIER 3 (70%-74% VERIFIED)"
+    },
+    {
+      "asset": "UNI/USDT (Binance 12H)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 4.88,
+      "status": "EXIT / SELL",
+      "candle_date": "2026-11-27",
+      "stop_loss": 4.5071,
+      "take_profit": 5.5122,
+      "total_trades": 41,
+      "win_rate": 73.17,
+      "profit_factor": 2.57,
+      "max_drawdown": 13.86,
+      "net_return": 39.15,
+      "final_equity": 13914.72,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
+      "updated_at": "2026-11-27T12:53:43.926561+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
@@ -340,7 +340,7 @@
       "final_equity": 14238.06,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:13.534371+00:00",
+      "updated_at": "2026-11-27T12:54:29.024847+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
@@ -359,7 +359,7 @@
       "final_equity": 12542.55,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:57.418797+00:00",
+      "updated_at": "2026-11-27T12:54:12.907080+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
@@ -378,26 +378,45 @@
       "final_equity": 13598.71,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:11.280954+00:00",
+      "updated_at": "2026-11-27T12:54:26.763741+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
-      "asset": "LTC/USDT (Binance 12H)",
-      "strategy": "Connors RSI(2) Extreme (<5)",
-      "price": 42.79,
+      "asset": "ETH/USDT (Binance 12H)",
+      "strategy": "3-Bar Panic Pullback (Quick Exit)",
+      "price": 1719.87,
       "status": "EXIT / SELL",
-      "candle_date": "2026-11-25",
-      "stop_loss": 39.4504,
-      "take_profit": 48.3561,
-      "total_trades": 50,
-      "win_rate": 72.0,
-      "profit_factor": 4.17,
-      "max_drawdown": 9.38,
-      "net_return": 68.96,
-      "final_equity": 16896.36,
+      "candle_date": "2026-11-27",
+      "stop_loss": 1599.6021,
+      "take_profit": 1920.3164,
+      "total_trades": 28,
+      "win_rate": 71.43,
+      "profit_factor": 1.72,
+      "max_drawdown": 13.52,
+      "net_return": 6.7,
+      "final_equity": 10669.93,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:23:20.628995+00:00",
+      "updated_at": "2026-11-27T12:53:16.146231+00:00",
+      "tier": "TIER 3 (70%-74% VERIFIED)"
+    },
+    {
+      "asset": "BTC/USDT (Binance 12H)",
+      "strategy": "Connors RSI(2) Extreme (<5)",
+      "price": 61477.62,
+      "status": "EXIT / SELL",
+      "candle_date": "2026-11-27",
+      "stop_loss": 58188.2625,
+      "take_profit": 66959.8825,
+      "total_trades": 62,
+      "win_rate": 70.97,
+      "profit_factor": 1.82,
+      "max_drawdown": 17.48,
+      "net_return": 34.51,
+      "final_equity": 13451.07,
+      "max_risk_usd": 100.0,
+      "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
+      "updated_at": "2026-11-27T12:53:14.301296+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     },
     {
@@ -416,7 +435,7 @@
       "final_equity": 11325.54,
       "max_risk_usd": 100.0,
       "ai_verdict": "NOT_TRIGGERED ? STANDBY (Dual-AI runs only on live BUY signals)",
-      "updated_at": "2026-11-27T03:24:17.306714+00:00",
+      "updated_at": "2026-11-27T12:54:32.790726+00:00",
       "tier": "TIER 3 (70%-74% VERIFIED)"
     }
   ]
