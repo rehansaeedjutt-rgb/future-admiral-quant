@@ -34,5 +34,12 @@
   "XRP/USDT (Binance 1D)|EXIT|2026-11-25": true,
   "ETH/USDT (Binance 12H)|EXIT|2026-11-27": true,
   "AVAX/USDT (Binance 12H)|EXIT|2026-11-27": true,
-  "BTC/USDT (Binance 12H)|EXIT|2026-11-27": true
+  "BTC/USDT (Binance 12H)|EXIT|2026-11-27": true,
+  "XBI (US Stock 1D)|EXIT|2026-11-27": true,
+  "GILD (US Stock 1D)|EXIT|2026-11-27": true,
+  "LLY (US Stock 1D)|EXIT|2026-11-27": true,
+  "AVGO (US Stock 1D)|EXIT|2026-11-27": true,
+  "MU (US Stock 1D)|EXIT|2026-11-27": true,
+  "GE (US Stock 1D)|EXIT|2026-11-27": true,
+  "WFC (US Stock 1D)|EXIT|2026-11-27": true
 }
