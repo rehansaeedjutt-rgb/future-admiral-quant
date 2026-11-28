@@ -41,5 +41,7 @@
   "AVGO (US Stock 1D)|EXIT|2026-11-27": true,
   "MU (US Stock 1D)|EXIT|2026-11-27": true,
   "GE (US Stock 1D)|EXIT|2026-11-27": true,
-  "WFC (US Stock 1D)|EXIT|2026-11-27": true
+  "WFC (US Stock 1D)|EXIT|2026-11-27": true,
+  "WEEKEND_2026-11-28": true,
+  "BCH/USDT (Binance 1D)|EXIT|2026-11-28": true
 }
